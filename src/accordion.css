@@ -1,0 +1,37 @@
+:root {
+  --accordion-title-background: #EDEDED;
+  --accordion-body-border-color: transparent;
+  --accordion-expand-rate: 0.25s;
+  --accordion-open-title-background: #EDEDED;
+}
+accordion-element {
+  width: 95%;
+  margin-top: 0.1em;
+  display: inline-block;
+  height: unset;
+}
+accordion-element > .accordion-title {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--accordion-title-background, #EDEDED);
+  text-transform: uppercase;
+}
+accordion-element > .accordion-title:hover {
+  cursor: pointer;
+}
+accordion-element > .accordion-body {
+  border: 1px solid var(--accordion-body-border-color, transparent);
+  width: 95%;
+  transition: height var(--accordion-expand-rate, 0.25s);
+  overflow: hidden;
+}
+accordion-element:not(.open) > .accordion-body {
+  height: 0 !important;
+  border: 0;
+}
+accordion-element.open > .accordion-title {
+  background-color: var(--accordion-open-title-background);
+}
+accordion-element.open > .accordion-body {
+  overflow-y: visible;
+}

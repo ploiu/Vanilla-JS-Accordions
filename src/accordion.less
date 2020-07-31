@@ -1,0 +1,57 @@
+@accordion-title-background: #EDEDED;
+@accordion-body-border-color: transparent;
+@accordion-expand-rate: 0.25s;
+@accordion-open-title-background: @accordion-title-background;
+
+// use this if you want to use css variables
+:root {
+  --accordion-title-background: @accordion-title-background;
+  --accordion-body-border-color: @accordion-body-border-color;
+  --accordion-expand-rate: @accordion-expand-rate;
+  --accordion-open-title-background: @accordion-open-title-background;
+}
+
+accordion-element {
+  width: 95%;
+  margin-top: 0.1em;
+  display: inline-block;
+  height: unset;
+
+  > .accordion-title {
+	width: 100%;
+	padding: 1rem;
+	background-color: var(--accordion-title-background, #EDEDED);
+	text-transform: uppercase;
+
+	&:hover {
+	  cursor: pointer;
+	}
+  }
+
+  > .accordion-body {
+	border: 1px solid var(--accordion-body-border-color, transparent);
+	width: 95%;
+	transition: height var(--accordion-expand-rate, 0.25s);
+	overflow: hidden;
+  }
+
+  // closed accordion state
+  &:not(.open) {
+	> .accordion-body {
+	  height: 0 !important;
+	  border: 0;
+	}
+  }
+
+  // open accordion state
+  &.open {
+	> .accordion-title {
+	  background-color: var(--accordion-open-title-background);
+	}
+	
+	>.accordion-body {
+	  // TODO this will show a scroll bar, which I want to avoid. For now this is all I have time to do though
+	  overflow-y: visible;
+	}
+  }
+}

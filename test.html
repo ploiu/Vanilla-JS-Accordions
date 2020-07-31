@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test For Accordion</title>
+	<link rel="stylesheet" href="build/accordion.min.css"/>
+</head>
+<body>
+<accordion-element data-title="test" data-open>
+	<div>
+		<h1>test</h1>
+		<div>
+			<span>inner text</span>
+		</div>
+	</div>
+</accordion-element>
+<accordion-element data-title="test2">
+	<h3>hi</h3>
+</accordion-element>
+<accordion-element data-title="has a group" data-group="group1">
+	<h3>grouped!</h3>
+</accordion-element>
+<accordion-element data-title="has nested accordions">
+	<accordion-element data-title="nested1" data-group="nested"><span>Nested Content</span></accordion-element>
+	<accordion-element data-title="nested2" data-group="nested"><span>Nested Content</span></accordion-element>
+	<accordion-element data-title="nested3" data-group="nested"><span>Nested Content</span></accordion-element>
+	<accordion-element data-title="nested5" data-group="nested"><span>Nested Content</span></accordion-element>
+</accordion-element>
+<script src="./build/AccordionElement.min.js" type="module"></script>
+</body>
+</html>

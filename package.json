@@ -1,0 +1,25 @@
+{
+	"name": "vanilla-accordions",
+	"version": "1.0.0",
+	"description": "vanilla javascript accordions using web components for modern browsers ",
+	"main": "index.js",
+	"scripts": {
+		"build": "npm run build-js && npm run build-less",
+		"build-js": "minify src/AccordionElement.js -o build/AccordionElement.min.js",
+		"build-less": "lessc src/accordion.less src/accordion.css && lessc src/accordion.less build/accordion.min.css --clean-css"
+	},
+	"keywords": [
+		"accordion",
+		"vanilla"
+	],
+	"author": "ploiu",
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/cli": "^7.10.5",
+		"@babel/core": "^7.11.0",
+		"babel-minify": "^0.5.1",
+		"babel-plugin-minify-mangle-names": "^0.5.0",
+		"less": "^3.12.2",
+		"less-plugin-clean-css": "^1.5.1"
+	}
+}
