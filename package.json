@@ -20,6 +20,7 @@
 		"babel-minify": "^0.5.1",
 		"babel-plugin-minify-mangle-names": "^0.5.0",
 		"less": "^3.12.2",
-		"less-plugin-clean-css": "^1.5.1"
+		"less-plugin-clean-css": "^1.5.1",
+		"clean-css": "^4.2.3"
 	}
 }
