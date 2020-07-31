@@ -3,6 +3,7 @@
   --accordion-body-border-color: transparent;
   --accordion-expand-rate: 0.25s;
   --accordion-open-title-background: #EDEDED;
+  --accordion-border-radius: 4px;
 }
 accordion-element {
   width: 95%;
@@ -13,25 +14,28 @@ accordion-element {
 accordion-element > .accordion-title {
   width: 100%;
   padding: 1rem;
-  background-color: var(--accordion-title-background, #EDEDED);
+  background-color: var(--accordion-title-background);
   text-transform: uppercase;
+  border-radius: var(--accordion-border-radius);
 }
 accordion-element > .accordion-title:hover {
   cursor: pointer;
 }
 accordion-element > .accordion-body {
-  border: 1px solid var(--accordion-body-border-color, transparent);
+  border: 1px solid var(--accordion-body-border-color);
   width: 95%;
-  transition: height var(--accordion-expand-rate, 0.25s);
+  transition: height var(--accordion-expand-rate);
   overflow: hidden;
 }
 accordion-element:not(.open) > .accordion-body {
   height: 0 !important;
   border: 0;
 }
+accordion-element.open {
+  height: max-content;
+}
 accordion-element.open > .accordion-title {
   background-color: var(--accordion-open-title-background);
-}
-accordion-element.open > .accordion-body {
-  overflow-y: visible;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }

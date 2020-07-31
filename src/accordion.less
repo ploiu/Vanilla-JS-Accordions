@@ -2,6 +2,7 @@
 @accordion-body-border-color: transparent;
 @accordion-expand-rate: 0.25s;
 @accordion-open-title-background: @accordion-title-background;
+@accordion-border-radius: 4px;
 
 // use this if you want to use css variables
 :root {
@@ -9,6 +10,7 @@
   --accordion-body-border-color: @accordion-body-border-color;
   --accordion-expand-rate: @accordion-expand-rate;
   --accordion-open-title-background: @accordion-open-title-background;
+  --accordion-border-radius: @accordion-border-radius;
 }
 
 accordion-element {
@@ -20,8 +22,9 @@ accordion-element {
   > .accordion-title {
 	width: 100%;
 	padding: 1rem;
-	background-color: var(--accordion-title-background, #EDEDED);
+	background-color: var(--accordion-title-background);
 	text-transform: uppercase;
+	border-radius: var(--accordion-border-radius);
 
 	&:hover {
 	  cursor: pointer;
@@ -29,9 +32,9 @@ accordion-element {
   }
 
   > .accordion-body {
-	border: 1px solid var(--accordion-body-border-color, transparent);
+	border: 1px solid var(--accordion-body-border-color);
 	width: 95%;
-	transition: height var(--accordion-expand-rate, 0.25s);
+	transition: height var(--accordion-expand-rate);
 	overflow: hidden;
   }
 
@@ -45,13 +48,15 @@ accordion-element {
 
   // open accordion state
   &.open {
+	height: max-content;
 	> .accordion-title {
 	  background-color: var(--accordion-open-title-background);
+	  border-bottom-left-radius: 0;
+	  border-bottom-right-radius: 0;
 	}
 	
-	>.accordion-body {
-	  // TODO this will show a scroll bar, which I want to avoid. For now this is all I have time to do though
-	  overflow-y: visible;
+	> .accordion-body {
+	  //overflow: visible;
 	}
   }
 }

@@ -33,6 +33,8 @@ class AccordionElement extends HTMLElement {
 		if (this.dataset.open !== undefined) {
 			this.expand();
 		}
+		
+		this._initialHeight = this.scrollHeight + this._bodyElement.scrollHeight;
 	}
 
 	// ==============================================================================
@@ -90,8 +92,8 @@ class AccordionElement extends HTMLElement {
 	 */
 	expand() {
 		this._isOpen = true;
-		// set the height of the body to be the scroll height
-		this._bodyElement.style.height = `${this._bodyElement.scrollHeight}px`;
+		// set the height of the body to be the scroll height of the body and all other accordion bodies underneath
+		this._bodyElement.style.height = `${this._bodyElement.scrollHeight + Array.from(this._bodyElement.querySelectorAll('.accordion-body')).map(el => el.scrollHeight).reduce((a,b) => a + b, 0)}px`;
 		this.classList.add('open');
 		// hide all other open accordions in the same group
 		AccordionElement.findAccordionsByGroup(this._group).filter(accordion => accordion !== this).forEach(accordion => accordion.collapse());
@@ -102,7 +104,7 @@ class AccordionElement extends HTMLElement {
 	 */
 	collapse() {
 		this._isOpen = false;
-		this._bodyElement.style.height = '';
+		this._bodyElement.style.height = '0';
 		this.classList.remove('open');
 	}
 
@@ -117,6 +119,15 @@ class AccordionElement extends HTMLElement {
 		}
 	}
 
+	/**
+	 * Gets the height of all children elements to be used when expanding this accordion
+	 * 
+	 * @returns {number} the number of pixels that the children in this accordion expand to be
+	 */
+	calculateChildHeight() {
+		return Array.from(this._bodyElement.children).map(el => el.scrollHeight).reduce((a, b) => a + b);
+	}
+	
 	/**
 	 * finds the registered accordion with the passed `id`, or `null` if none could be found. If there are multiple accordions with the same id,
 	 * the first one created on the page will be returned.
