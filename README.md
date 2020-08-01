@@ -18,6 +18,6 @@ To be completely honest, I was bored and wanted to start a side project. I saw t
 # Features
 - easy-to-use syntax - just plop in the js and css files into your project, add them to your html page, and use the `<accordion-element>` to create an accordion
 - easy to customize - styles are provided in both less _and_ css, with some pre-created css variables to help customize your accordions
-- tiny - combined, the minified sources are just over 1kb when gZipped
+- tiny - combined, the minified sources are just over 1.5kb when gZipped
 - supports nested accordions and accordion groups - accordions can be grouped with a `data-group` attribute so that only those in the same group close when one is opened, allowing for nested accordions
 - auto-update accordion title - using class setters, an accordion's title can be updated without you having to touch the dom, simply by updating the `title` field on the accordion object
