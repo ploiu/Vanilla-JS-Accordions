@@ -27,6 +27,9 @@ accordion-element > .accordion-body {
   transition: height var(--accordion-expand-rate);
   overflow: hidden;
 }
+accordion-element > .accordion-body > accordion-element {
+  margin-left: 1em;
+}
 accordion-element:not(.open) > .accordion-body {
   height: 0 !important;
   border: 0;
@@ -38,4 +41,7 @@ accordion-element.open > .accordion-title {
   background-color: var(--accordion-open-title-background);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+accordion-fan > accordion-element {
+  margin: -1vh auto !important;
 }

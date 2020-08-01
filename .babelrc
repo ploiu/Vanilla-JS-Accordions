@@ -1,5 +1,8 @@
 {
-  "plugins": [
-	"minify-mangle-names"
-  ]
+	"plugins": [
+		"minify-mangle-names"
+	],
+	"sourceMaps": true,
+	"sourceFileName": "AccordionElement.js",
+	"sourceRoot": "./"
 }

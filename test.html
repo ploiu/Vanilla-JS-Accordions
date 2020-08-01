@@ -21,6 +21,7 @@
 	<h3>grouped!</h3>
 </accordion-element>
 <accordion-element data-title="has nested accordions">
+	<h1>test</h1>
 	<accordion-element data-title="nested1" data-group="nested"><span>Nested Content</span></accordion-element>
 	<accordion-element data-title="nested2" data-group="nested"><span>Nested Content</span></accordion-element>
 	<accordion-element data-title="nested3" data-group="nested"><span>Nested Content</span></accordion-element>
@@ -54,6 +55,20 @@
 		</table>
 	</accordion-element>
 </accordion-element>
-<script src="./build/AccordionElement.min.js" type="module"></script>
+<br style="margin: 1em;">
+<accordion-fan>
+	<accordion-element data-title="grouped-1">
+		<accordion-element data-title="hello">
+			<p>test</p>
+		</accordion-element>
+	</accordion-element>
+	<accordion-element data-title="grouped-2">
+		<h2>hi</h2>
+	</accordion-element>
+	<accordion-element data-title="grouped-3">
+		<h3>hi</h3>
+	</accordion-element>
+</accordion-fan>
+<script src="./src/AccordionElement.js" type="module"></script>
 </body>
 </html>

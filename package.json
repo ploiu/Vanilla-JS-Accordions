@@ -6,7 +6,8 @@
 	"scripts": {
 		"build": "npm run build-js && npm run build-less",
 		"build-js": "minify src/AccordionElement.js -o build/AccordionElement.min.js",
-		"build-less": "lessc src/accordion.less src/accordion.css && lessc src/accordion.less build/accordion.min.css --clean-css"
+		"build-less": "lessc src/accordion.less src/accordion.css && lessc src/accordion.less build/accordion.min.css --clean-css",
+		"build-source-maps": "babel src --out-dir build --source-maps"
 	},
 	"keywords": [
 		"accordion",

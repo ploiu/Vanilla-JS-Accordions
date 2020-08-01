@@ -33,8 +33,7 @@ class AccordionElement extends HTMLElement {
 		if (this.dataset.open !== undefined) {
 			this.expand();
 		}
-		
-		this._initialHeight = this.scrollHeight + this._bodyElement.scrollHeight;
+		this._parentAccordion = null;
 	}
 
 	// ==============================================================================
@@ -87,25 +86,46 @@ class AccordionElement extends HTMLElement {
 		this._titleElement.innerText = value;
 	}
 
+	get isOpen() {
+		return this._isOpen;
+	}
+
+	get bodyElement() {
+		return this._bodyElement;
+	}
+
 	/**
 	 * Opens the accordion and displays the contents inside of it
 	 */
 	expand() {
+		// hide all other open accordions in the same group
+		AccordionElement.findAccordionsByGroup(this._group).filter(accordion => accordion !== this && accordion !== this._parentAccordion).forEach(accordion => accordion.collapse());
 		this._isOpen = true;
 		// set the height of the body to be the scroll height of the body and all other accordion bodies underneath
-		this._bodyElement.style.height = `${this._bodyElement.scrollHeight + Array.from(this._bodyElement.querySelectorAll('.accordion-body')).map(el => el.scrollHeight).reduce((a,b) => a + b, 0)}px`;
+		this._bodyElement.style.height = `${this._bodyElement.scrollHeight}px`;
+		// if the parent element is an accordion, increase the height of it to accommodate
+		if (this._parentAccordion?.isOpen) {
+			// add the height of our accordion minus the height of our title element. 
+			this._parentAccordion.bodyElement.style.height =
+				Number.parseFloat(this._parentAccordion.bodyElement.style.height.replace(/px/, '')) // we manually set the pixel height of the element, so this is ok to do
+				+ this.bodyElement.scrollHeight + 'px';
+		}
 		this.classList.add('open');
-		// hide all other open accordions in the same group
-		AccordionElement.findAccordionsByGroup(this._group).filter(accordion => accordion !== this).forEach(accordion => accordion.collapse());
 	}
 
 	/**
 	 * Closes the accordion and hides the contents inside of it
 	 */
 	collapse() {
-		this._isOpen = false;
-		this._bodyElement.style.height = '0';
-		this.classList.remove('open');
+		if (this._isOpen) {
+			this._isOpen = false;
+			// if our parent is an accordion element, reduce the size back to the initial height
+			if (this._parentAccordion) {
+				this._parentAccordion.bodyElement.style.height = this._parentAccordion.bodyElement.clientHeight - this.bodyElement.scrollHeight + 'px';
+			}
+			this._bodyElement.style.height = '0';
+			this.classList.remove('open');
+		}
 	}
 
 	/**
@@ -120,14 +140,40 @@ class AccordionElement extends HTMLElement {
 	}
 
 	/**
-	 * Gets the height of all children elements to be used when expanding this accordion
-	 * 
-	 * @returns {number} the number of pixels that the children in this accordion expand to be
+	 * gets the first parent element whose tag matches 'ACCORDION-ELEMENT' and returns it
+	 * @returns {AccordionElement|null} the first accordion parent element if their is one, else null
+	 * @private
 	 */
-	calculateChildHeight() {
-		return Array.from(this._bodyElement.children).map(el => el.scrollHeight).reduce((a, b) => a + b);
+	_getParentAccordion() {
+		let parents = [];
+		let currentNode = this;
+		while (currentNode?.parentNode) {
+			parents.push(currentNode.parentNode);
+			currentNode = currentNode.parentNode;
+		}
+		parents = parents.filter(el => el?.tagName === 'ACCORDION-ELEMENT');
+		return parents.length > 0 ? parents[0] : null;
 	}
-	
+
+	/**
+	 * called when this node is connected to the DOM.
+	 *
+	 * An editor may say it's unused, but it's called by the browser and should not be removed
+	 *
+	 * @override
+	 */
+	connectedCallback() {
+		// make sure we're actually connected before we do anything
+		if (this.isConnected) {
+			this._parentAccordion = this._getParentAccordion();
+			if (this._parentAccordion !== null) {
+				this._initialParentAccordionHeight = this._parentAccordion.scrollHeight;
+			} else {
+				this._initialParentAccordionHeight = 0; // reset this
+			}
+		}
+	}
+
 	/**
 	 * finds the registered accordion with the passed `id`, or `null` if none could be found. If there are multiple accordions with the same id,
 	 * the first one created on the page will be returned.
@@ -153,7 +199,17 @@ class AccordionElement extends HTMLElement {
 
 }
 
+class AccordionFan extends HTMLElement {
+	constructor() {
+		super();
+		// for each of our child accordion elements, set its group to be this object
+		Array.from(this.querySelectorAll('accordion-element')).forEach(el => el.group = `fan-${idCounter}`);
+		idCounter++;
+	}
+}
+
 customElements.define('accordion-element', AccordionElement);
+customElements.define('accordion-fan', AccordionFan);
 
 // make this class accessible to external scripts
 window.AccordionElement = AccordionElement;

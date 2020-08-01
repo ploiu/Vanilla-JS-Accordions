@@ -36,6 +36,9 @@ accordion-element {
 	width: 95%;
 	transition: height var(--accordion-expand-rate);
 	overflow: hidden;
+	> accordion-element {
+	  margin-left: 1em;
+	}
   }
 
   // closed accordion state
@@ -59,4 +62,8 @@ accordion-element {
 	  //overflow: visible;
 	}
   }
+}
+
+accordion-fan > accordion-element {
+  margin: -1vh auto !important;
 }
