@@ -1,8 +1,9 @@
 @accordion-title-background: #EDEDED;
 @accordion-body-border-color: transparent;
 @accordion-expand-rate: 0.25s;
-@accordion-open-title-background: @accordion-title-background;
+@accordion-open-title-background: darken(@accordion-title-background, 3%);
 @accordion-border-radius: 4px;
+@accordion-fan-accordion-border-style: 1px solid #DDD;
 
 // use this if you want to use css variables
 :root {
@@ -11,6 +12,7 @@
   --accordion-expand-rate: @accordion-expand-rate;
   --accordion-open-title-background: @accordion-open-title-background;
   --accordion-border-radius: @accordion-border-radius;
+  --accordion-fan-accordion-border-style: @accordion-fan-accordion-border-style;
 }
 
 accordion-element {
@@ -18,13 +20,14 @@ accordion-element {
   margin-top: 0.1em;
   display: inline-block;
   height: unset;
+  border-radius: var(--accordion-border-radius);
 
   > .accordion-title {
 	width: 100%;
 	padding: 1rem;
 	background-color: var(--accordion-title-background);
 	text-transform: uppercase;
-	border-radius: var(--accordion-border-radius);
+	border-radius: inherit;
 
 	&:hover {
 	  cursor: pointer;
@@ -36,6 +39,7 @@ accordion-element {
 	width: 95%;
 	transition: height var(--accordion-expand-rate);
 	overflow: hidden;
+
 	> accordion-element {
 	  margin-left: 1em;
 	}
@@ -52,18 +56,41 @@ accordion-element {
   // open accordion state
   &.open {
 	height: max-content;
+
 	> .accordion-title {
 	  background-color: var(--accordion-open-title-background);
 	  border-bottom-left-radius: 0;
 	  border-bottom-right-radius: 0;
 	}
-	
+
 	> .accordion-body {
 	  //overflow: visible;
 	}
   }
 }
 
-accordion-fan > accordion-element {
-  margin: -1vh auto !important;
+accordion-fan {
+  display: block;
+  width: 100%;
+  padding-top: 1vh;
+
+  > accordion-element {
+	margin-top: -1vh;
+	border: var(--accordion-fan-accordion-border-style);
+	border-radius: 0;
+
+	> .accordion-title {
+	  width: auto;
+	}
+	
+	&:first-child {
+	  border-top-left-radius: var(--accordion-border-radius);
+	  border-top-right-radius: var(--accordion-border-radius);
+	}
+	
+	&:last-child {
+	  border-bottom-left-radius: var(--accordion-border-radius);
+	  border-bottom-right-radius: var(--accordion-border-radius);
+	}
+  }
 }

@@ -2,21 +2,23 @@
   --accordion-title-background: #EDEDED;
   --accordion-body-border-color: transparent;
   --accordion-expand-rate: 0.25s;
-  --accordion-open-title-background: #EDEDED;
+  --accordion-open-title-background: #e5e5e5;
   --accordion-border-radius: 4px;
+  --accordion-fan-accordion-border-style: 1px solid #DDD;
 }
 accordion-element {
   width: 95%;
   margin-top: 0.1em;
   display: inline-block;
   height: unset;
+  border-radius: var(--accordion-border-radius);
 }
 accordion-element > .accordion-title {
   width: 100%;
   padding: 1rem;
   background-color: var(--accordion-title-background);
   text-transform: uppercase;
-  border-radius: var(--accordion-border-radius);
+  border-radius: inherit;
 }
 accordion-element > .accordion-title:hover {
   cursor: pointer;
@@ -42,6 +44,24 @@ accordion-element.open > .accordion-title {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+accordion-fan {
+  display: block;
+  width: 100%;
+  padding-top: 1vh;
+}
 accordion-fan > accordion-element {
-  margin: -1vh auto !important;
+  margin-top: -1vh;
+  border: var(--accordion-fan-accordion-border-style);
+  border-radius: 0;
+}
+accordion-fan > accordion-element > .accordion-title {
+  width: auto;
+}
+accordion-fan > accordion-element:first-child {
+  border-top-left-radius: var(--accordion-border-radius);
+  border-top-right-radius: var(--accordion-border-radius);
+}
+accordion-fan > accordion-element:last-child {
+  border-bottom-left-radius: var(--accordion-border-radius);
+  border-bottom-right-radius: var(--accordion-border-radius);
 }

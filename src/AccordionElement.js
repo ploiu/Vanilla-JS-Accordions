@@ -95,6 +95,21 @@ class AccordionElement extends HTMLElement {
 	}
 
 	/**
+	 * Sets the contents of this accordion's body element. 
+	 * @param {HTMLElement} value
+	 */
+	set body(value) {
+		// first remove all the contents from our accordion body
+		Array.from(this._bodyElement.children).forEach(el => el?.remove());
+		// now add the contents of the value to the body element
+		this._bodyElement.appendChild(value);
+	}
+	
+	get titleElement() {
+		return this._titleElement;
+	}
+
+	/**
 	 * Opens the accordion and displays the contents inside of it
 	 */
 	expand() {
@@ -199,6 +214,11 @@ class AccordionElement extends HTMLElement {
 
 }
 
+/**
+ * creates a "fan" of accordions. All child accordions are grouped together so that when one closes, the others do too.
+ * This is more of a stylistic element than anything, as it visually groups accordions close together as if they're a
+ * part of a single element
+ */
 class AccordionFan extends HTMLElement {
 	constructor() {
 		super();
