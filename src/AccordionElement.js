@@ -14,13 +14,13 @@ window.accordions = [];
  * - `data-open`: sets the accordion to be open after it's added to the dom.
  */
 class AccordionElement extends HTMLElement {
-	constructor() {
+	constructor({title, id, isOpen, group} = {}) {
 		super();
 		// TODO make these variables private once all major browsers support private variables
-		this._title = this.dataset.title ?? '';
-		this._id = this.dataset.id ?? idCounter++;
-		this._isOpen = this.dataset.isOpen ?? false;
-		this._group = this.dataset.group ?? '';
+		this._title = title ?? this.dataset.title ?? '';
+		this._id = id ?? this.dataset.id ?? idCounter++;
+		this._isOpen = isOpen ?? this.dataset.isOpen ?? false;
+		this._group = group ?? this.dataset.group ?? '';
 		this._titleElement = this._createTitleElement();
 		this._bodyElement = this._createBodyElement();
 
@@ -30,7 +30,7 @@ class AccordionElement extends HTMLElement {
 		// add the accordion to the list
 		window.accordions.push(this);
 		// if the data-open attribute is set, expand this accordion
-		if (this.dataset.open !== undefined) {
+		if (this.dataset.open !== undefined || this._isOpen) {
 			this.expand();
 		}
 		this._parentAccordion = null;
@@ -90,12 +90,18 @@ class AccordionElement extends HTMLElement {
 		return this._isOpen;
 	}
 
+	/**
+	 * make this private once private fields and methods are a thing
+	 * @returns {HTMLDivElement} the div element that acts as the wrapper for the accordion's body
+	 *
+	 * @private
+	 */
 	get bodyElement() {
 		return this._bodyElement;
 	}
 
 	/**
-	 * Sets the contents of this accordion's body element. 
+	 * Sets the contents of this accordion's body element.
 	 * @param {HTMLElement} value
 	 */
 	set body(value) {
@@ -103,10 +109,6 @@ class AccordionElement extends HTMLElement {
 		Array.from(this._bodyElement.children).forEach(el => el?.remove());
 		// now add the contents of the value to the body element
 		this._bodyElement.appendChild(value);
-	}
-	
-	get titleElement() {
-		return this._titleElement;
 	}
 
 	/**
@@ -140,6 +142,8 @@ class AccordionElement extends HTMLElement {
 			}
 			this._bodyElement.style.height = '0';
 			this.classList.remove('open');
+			// close all child accordions
+			Array.from(this.querySelectorAll('accordion-element')).forEach(accordion => accordion.collapse());
 		}
 	}
 

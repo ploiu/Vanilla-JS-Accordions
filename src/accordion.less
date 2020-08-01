@@ -1,9 +1,10 @@
-@accordion-title-background: #EDEDED;
+@accordion-title-background: #f9f9f9;
 @accordion-body-border-color: transparent;
 @accordion-expand-rate: 0.25s;
 @accordion-open-title-background: darken(@accordion-title-background, 3%);
 @accordion-border-radius: 4px;
 @accordion-fan-accordion-border-style: 1px solid #DDD;
+@accordion-title-text-transform: capitalize;
 
 // use this if you want to use css variables
 :root {
@@ -13,6 +14,7 @@
   --accordion-open-title-background: @accordion-open-title-background;
   --accordion-border-radius: @accordion-border-radius;
   --accordion-fan-accordion-border-style: @accordion-fan-accordion-border-style;
+  --accordion-title-text-transform: @accordion-title-text-transform;
 }
 
 accordion-element {
@@ -23,10 +25,9 @@ accordion-element {
   border-radius: var(--accordion-border-radius);
 
   > .accordion-title {
-	width: 100%;
 	padding: 1rem;
 	background-color: var(--accordion-title-background);
-	text-transform: uppercase;
+	text-transform: var(--accordion-title-text-transform);
 	border-radius: inherit;
 
 	&:hover {
@@ -71,23 +72,24 @@ accordion-element {
 
 accordion-fan {
   display: block;
-  width: 100%;
+  width: 95%;
   padding-top: 1vh;
 
   > accordion-element {
 	margin-top: -1vh;
 	border: var(--accordion-fan-accordion-border-style);
 	border-radius: 0;
+	width: 100%;
 
 	> .accordion-title {
 	  width: auto;
 	}
-	
+
 	&:first-child {
 	  border-top-left-radius: var(--accordion-border-radius);
 	  border-top-right-radius: var(--accordion-border-radius);
 	}
-	
+
 	&:last-child {
 	  border-bottom-left-radius: var(--accordion-border-radius);
 	  border-bottom-right-radius: var(--accordion-border-radius);

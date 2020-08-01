@@ -1,10 +1,11 @@
 :root {
-  --accordion-title-background: #EDEDED;
+  --accordion-title-background: #f9f9f9;
   --accordion-body-border-color: transparent;
   --accordion-expand-rate: 0.25s;
-  --accordion-open-title-background: #e5e5e5;
+  --accordion-open-title-background: #f1f1f1;
   --accordion-border-radius: 4px;
   --accordion-fan-accordion-border-style: 1px solid #DDD;
+  --accordion-title-text-transform: capitalize;
 }
 accordion-element {
   width: 95%;
@@ -14,10 +15,9 @@ accordion-element {
   border-radius: var(--accordion-border-radius);
 }
 accordion-element > .accordion-title {
-  width: 100%;
   padding: 1rem;
   background-color: var(--accordion-title-background);
-  text-transform: uppercase;
+  text-transform: var(--accordion-title-text-transform);
   border-radius: inherit;
 }
 accordion-element > .accordion-title:hover {
@@ -46,13 +46,14 @@ accordion-element.open > .accordion-title {
 }
 accordion-fan {
   display: block;
-  width: 100%;
+  width: 95%;
   padding-top: 1vh;
 }
 accordion-fan > accordion-element {
   margin-top: -1vh;
   border: var(--accordion-fan-accordion-border-style);
   border-radius: 0;
+  width: 100%;
 }
 accordion-fan > accordion-element > .accordion-title {
   width: auto;

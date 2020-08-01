@@ -4,71 +4,160 @@
 	<meta charset="UTF-8">
 	<title>Test For Accordion</title>
 	<link rel="stylesheet" href="build/accordion.min.css"/>
+	<style>
+		#main {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		body {
+			font-family: "Segoe UI", Calibri, sans-serif;
+		}
+		
+		br {
+			margin: 0.5em 0;
+		}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
 </head>
 <body>
-<accordion-element data-title="test" data-open>
-	<div>
-		<h1>test</h1>
-		<div>
-			<span>inner text</span>
-		</div>
-	</div>
-</accordion-element>
-<accordion-element data-title="test2">
-	<h3>hi</h3>
-</accordion-element>
-<accordion-element data-title="has a group" data-group="group1">
-	<h3>grouped!</h3>
-</accordion-element>
-<accordion-element data-title="has nested accordions">
-	<h1>test</h1>
-	<accordion-element data-title="nested1" data-group="nested"><span>Nested Content</span></accordion-element>
-	<accordion-element data-title="nested2" data-group="nested"><span>Nested Content</span></accordion-element>
-	<accordion-element data-title="nested3" data-group="nested"><span>Nested Content</span></accordion-element>
-	<accordion-element data-title="nested5" data-group="nested">
-		<table>
-			<tr>
-				<th>header-1</th>
-				<th>header-2</th>
-				<th>header-3</th>
-			</tr>
-			<tr>
-				<td>col-1</td>
-				<td>col-2</td>
-				<td>col-3</td>
-			</tr>
-			<tr>
-				<td>col-1</td>
-				<td>col-2</td>
-				<td>col-3</td>
-			</tr>
-			<tr>
-				<td>col-1</td>
-				<td>col-2</td>
-				<td>col-3</td>
-			</tr>
-			<tr>
-				<td>col-1</td>
-				<td>col-2</td>
-				<td>col-3</td>
-			</tr>
-		</table>
+<div id="main">
+	<h1>Accordion Element Testing Page</h1>
+	<accordion-element data-title="Basic Accordion - Click Me!">
+		<h1>This is a basic Accordion</h1>
+		<pre class="html">
+	<code>
+		&lt;!-- This is the code that goes into the accordion element --&gt;
+		&lt;accordion-element data-title="Basic Accordion - Click Me!"&gt;
+			&lt;h1&gt;This is a basic Accordion&lt;/h1&gt;
+		&lt;/accordion-element&gt;
+	</code>
+	</pre>
 	</accordion-element>
-</accordion-element>
-<br style="margin: 1em;">
-<accordion-fan>
-	<accordion-element data-title="fan-1" data-open>
-		<accordion-element data-title="hello">
-			<p>test</p>
+	<accordion-element data-title="This Accordion Should Start Opened Up" data-open>
+		<h2>Made you look!</h2>
+	</accordion-element>
+	<accordion-element data-title="Opening This One Does Not Close The Others" data-group="test">
+		<pre class="html">
+			<code>
+				&lt;accordion-element data-title="Opening This One Does Not Close The Others" data-group="test"&gt;&lt;/accordion-element&gt;
+			</code>
+		</pre>
+	</accordion-element>
+	<br>
+	<accordion-fan>
+		<accordion-element data-title="This is an accordion fan">
+		<pre class="html">
+			<code>
+			&lt;accordion-fan&gt;
+				&lt;accordion-element data-title="This is an accordion fan"&gt;&lt;/accordion-element&gt;
+					&lt;accordion-element data-title="The accordions are connected together"&gt;&lt;/accordion-element&gt;
+				&lt;accordion-element data-title="Hello There!"&gt;
+					&lt;img src="https://media3.giphy.com/media/Nx0rz3jtxtEre/giphy.gif"&gt;
+				&lt;/accordion-element&gt;
+			&lt;/accordion-fan&gt;
+			</code>
+		</pre>
+		</accordion-element>
+		<accordion-element data-title="The accordions are connected together">
+			<p>Cat ipsum dolor sit amet, going to catch the red dot today going to catch the red dot today yet play
+				riveting piece on synthesizer keyboard and the door is opening! how exciting oh, it's you, meh, taco cat
+				backwards spells taco cat. do not try to mix old food with new one to fool me!. Meow meow run at 3am,
+				cough hairball on conveniently placed pants so i can haz, leave hair everywhere, or cats are fats i like
+				to pets them they like to meow back. Weigh eight pounds but take up a full-size bed paw at beetle and
+				eat it before it gets away or scream for no reason at 4 am for hell is other people run at 3am show
+				belly. Cuddle no cuddle cuddle love scratch scratch bite the neighbor's bratty kid for purr kitty poochy
+				bring your owner a dead bird so nap all day, and chew the plant. Bleghbleghvomit my furball really tie
+				the room together carefully drink from water glass and then spill it everywhere and proceed to lick the
+				puddle, poop in a handbag look delicious and drink the soapy mopping up water then puke giant foamy
+				fur-balls peer out window, chatter at birds, lure them to mouth steal the warm chair right after you get
+				up. </p>
+		</accordion-element>
+		<accordion-element data-title="Hello There!">
+			<img src="https://media3.giphy.com/media/Nx0rz3jtxtEre/giphy.gif">
+		</accordion-element>
+	</accordion-fan>
+	<br>
+	<accordion-element data-title="Nested Accordions Are Supported Too!">
+		<accordion-element data-title="Just use the data-group attribute" data-group="nested">
+			<p>Sleep suddenly go on wild-eyed crazy rampage yet decide to want nothing to do with my owner today for
+				step on your keyboard while you're gaming and then turn in a circle and attack dog, run away and pretend
+				to be victim yet bring your owner a dead bird or cat dog hate mouse eat string barf pillow no baths hate
+				everything. Cats are fats i like to pets them they like to meow back stuff and things but eat from dog's
+				food so stinky cat so chase ball of string and hit you unexpectedly yet howl on top of tall thing. Poop
+				on grasses groom forever, stretch tongue and leave it slightly out, blep eat grass, throw it back up.
+				Scamper sit and stare run as fast as i can into another room for no reason, white cat sleeps on a black
+				shirt.</p>
+		</accordion-element>
+		<accordion-element data-group="nested" data-title="Inner Accordions dynamically size the parent accordion's height">
+			<ul>
+				<li>001</li>
+				<li>002</li>
+				<li>003</li>
+			</ul>
+		</accordion-element>
+		<accordion-element data-group="nested" data-title="Closing the parent accordion closes all open child accordions">
+			<table>
+				<thead>
+				<tr>
+					<th>header 1</th>
+					<th>header 2</th>
+					<th>header 3</th>
+					<th>header 4</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>cell 1</td>
+					<td>cell 2</td>
+					<td>cell 3</td>
+					<td>cell 4</td>
+				</tr>
+				<tr>
+					<td>cell 1</td>
+					<td>cell 2</td>
+					<td>cell 3</td>
+					<td>cell 4</td>
+				</tr>
+				<tr>
+					<td>cell 1</td>
+					<td>cell 2</td>
+					<td>cell 3</td>
+					<td>cell 4</td>
+				</tr>
+				<tr>
+					<td>cell 1</td>
+					<td>cell 2</td>
+					<td>cell 3</td>
+					<td>cell 4</td>
+				</tr>
+				<tr>
+					<td>cell 1</td>
+					<td>cell 2</td>
+					<td>cell 3</td>
+					<td>cell 4</td>
+				</tr>
+				<tr>
+					<td>cell 1</td>
+					<td>cell 2</td>
+					<td>cell 3</td>
+					<td>cell 4</td>
+				</tr>
+				<tr>
+					<td>cell 1</td>
+					<td>cell 2</td>
+					<td>cell 3</td>
+					<td>cell 4</td>
+				</tr>
+				</tbody>
+			</table>
 		</accordion-element>
 	</accordion-element>
-	<accordion-element data-title="fan-2" data-open>
-		<h2>hi</h2>
-	</accordion-element>
-	<accordion-element data-title="fan-3">
-		<h3>hi</h3>
-	</accordion-element>
-</accordion-fan>
+</div>
 <script src="./build/AccordionElement.min.js" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
