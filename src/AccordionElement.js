@@ -106,9 +106,22 @@ if (!customElements.get('accordion-element')) {
 			return this.#title;
 		}
 
+		/**
+		 * sets the contents of our title
+		 * @param {string|Node} value
+		 */
 		set title(value) {
-			this.#title = value;
-			this.#titleElement.innerText = value;
+			if(typeof value === 'string') {
+				this.#title = value;
+				this.#titleElement.innerText = value;		
+			} else if(value instanceof Node) {
+				this.#title = '';
+				this.#titleElement.innerText = '';
+				// first clear the titleElement's children
+				[...this.#titleElement.children].forEach(it => it.remove());
+				// now append our value to the title element
+				this.#titleElement.appendChild(value)
+			}
 		}
 
 		get isOpen() {
