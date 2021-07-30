@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 if (!customElements.get('accordion-element')) {
-// used to keep track of default IDs
+	// used to keep track of default IDs
 	let idCounter = 0;
 	/**
 	 * keeps track of the accordions that have been loaded so far
@@ -45,6 +45,7 @@ if (!customElements.get('accordion-element')) {
 		#bodyElement
 		#parentAccordion
 		#initialParentAccordionHeight
+
 		constructor({title, id, isOpen, group} = {}) {
 			super();
 			// TODO make these variables private once all major browsers support private variables
@@ -52,37 +53,49 @@ if (!customElements.get('accordion-element')) {
 			this.#id = id ?? this.dataset.id ?? idCounter++;
 			this.#isOpen = isOpen ?? this.dataset.isOpen ?? false;
 			this.#group = group ?? this.dataset.group ?? '';
-			this.#titleElement = this._createTitleElement();
-			this.#bodyElement = this._createBodyElement();
 
 			// add the accordion to the list
 			window.accordions.push(this);
-			
+
 			this.#parentAccordion = null;
 		}
 
 		// ==============================================================================
-		// TODO make this method private once firefox supports private fields and methods
+		// TODO make this method private once safari supports private fields and methods
 		// ==============================================================================
 		_createTitleElement() {
-			const element = document.createElement('div');
-			element.classList.add('ploiu-accordion-title');
-			element.innerText = this.#title;
-			element.addEventListener('click', () => this.toggle());
-			return element;
+			// if we already have a div with the class ploiu-accordion-title, skip all this and just return the element. This allows the developer to set their own custom html titles
+			const existingTitle = this.querySelector('div.ploiu-accordion-title')
+			if (existingTitle) {
+				existingTitle.addEventListener('click', () => this.toggle());
+				return existingTitle;
+			} else {
+				const element = document.createElement('div');
+				element.classList.add('ploiu-accordion-title');
+				element.innerText = this.#title;
+				element.addEventListener('click', () => this.toggle());
+				return element;
+			}
 		}
 
 		_createBodyElement() {
-			const element = document.createElement('div');
-			element.classList.add('ploiu-accordion-body');
-			// add all the child nodes from this element to the body element
-			while (this.childElementCount > 0) {
-				// always get the 0th index since we'll be removing the node later
-				const node = this.children[0];
-				element.appendChild(node.cloneNode(true));
-				node.remove();
+			// if the developer already specified an accordion body, just return that instead of creating it all ourselves
+			const existingBody = this.querySelector('div.ploiu-accordion-body')
+			if (existingBody) {
+				return existingBody;
+			} else {
+				const element = document.createElement('div');
+				element.classList.add('ploiu-accordion-body');
+				// add all the child nodes from this element to the body element
+				const trueChildren = [...this.childNodes].filter(it => !it.classList?.contains('ploiu-accordion-title'))
+				for (let child of trueChildren) {
+					// always get the 0th index since we'll be removing the node later
+					const node = child;
+					element.appendChild(node.cloneNode(true));
+					node.remove();
+				}
+				return element;
 			}
-			return element;
 		}
 
 		/**
@@ -111,10 +124,10 @@ if (!customElements.get('accordion-element')) {
 		 * @param {string|Node} value
 		 */
 		set title(value) {
-			if(typeof value === 'string') {
+			if (typeof value === 'string') {
 				this.#title = value;
-				this.#titleElement.innerText = value;		
-			} else if(value instanceof Node) {
+				this.#titleElement.innerText = value;
+			} else if (value instanceof Node) {
 				this.#title = '';
 				this.#titleElement.innerText = '';
 				// first clear the titleElement's children
@@ -222,6 +235,8 @@ if (!customElements.get('accordion-element')) {
 		connectedCallback() {
 			// make sure we're actually connected before we do anything
 			if (this.isConnected) {
+				this.#titleElement = this._createTitleElement();
+				this.#bodyElement = this._createBodyElement();
 				// append children here and set up other dom-based attributes
 				this.appendChild(this.#titleElement);
 				this.appendChild(this.#bodyElement);
