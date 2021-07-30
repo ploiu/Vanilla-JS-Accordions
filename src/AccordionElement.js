@@ -273,7 +273,7 @@ if (!customElements.get('accordion-element')) {
 		 * @returns {AccordionElement[]}
 		 */
 		static findAccordionsByGroup(group) {
-			return window.accordions.filter(accordion => accordion.group.toLowerCase() === group.toLowerCase());
+			return [...document.querySelectorAll('accordion-element')].filter(accordion => accordion.group.toLowerCase() === group.toLowerCase());
 		}
 
 	}
@@ -284,11 +284,12 @@ if (!customElements.get('accordion-element')) {
 	 * part of a single element
 	 */
 	class AccordionFan extends HTMLElement {
-		constructor() {
-			super();
-			// for each of our child accordion elements, set its group to be this object
-			Array.from(this.querySelectorAll('accordion-element')).forEach(el => el.group = `fan-${idCounter}`);
-			idCounter++;
+		connectedCallback() {
+			if(this.isConnected) {
+				// for each of our child accordion elements, set its group to be this object
+				Array.from(this.querySelectorAll('accordion-element')).forEach(el => el.group = `fan-${idCounter}`);
+				idCounter++;
+			}
 		}
 	}
 
