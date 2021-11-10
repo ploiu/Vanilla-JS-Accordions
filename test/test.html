@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Accordion Element automated testing</title>
+	<meta charset="UTF-8">
+	<title>Accordion Element automated testing</title>
 	<link rel="stylesheet" href="../src/accordion.css">
 </head>
 <body>
@@ -21,43 +21,57 @@
 			Ploiu.assertEquals('Test', title.innerText, 'data-title should set the title element');
 			Ploiu.assertEquals('test body', body.innerText, 'accordion should wrap body contents in a body element');
 		});
-		
+
 		await Ploiu.testAsync("should - open the accordion when it is closed and the title is clicked", async () => {
 			const accordion = document.querySelector('accordion-element#throughHTML');
 			const title = accordion.querySelector('div.ploiu-accordion-title');
 			const body = accordion.querySelector('div.ploiu-accordion-body');
-			await Ploiu.clickAndWait(title)
-			Ploiu.assertEquals('open', accordion.className, 'accordion should be open when clicked while closed')
-			Ploiu.assertNotEquals("", body.style.height, 'body height should be changed to accommodate contents')
-		})
-		
+			await Ploiu.clickAndWait(title);
+			Ploiu.assertEquals('open', accordion.className, 'accordion should be open when clicked while closed');
+			Ploiu.assertNotEquals("", body.style.height, 'body height should be changed to accommodate contents');
+		});
+
 		await Ploiu.testAsync("should - close the accordion when it is open and the title is clicked", async () => {
 			const accordion = document.querySelector('accordion-element#throughHTML');
 			const title = accordion.querySelector('div.ploiu-accordion-title');
 			const body = accordion.querySelector('div.ploiu-accordion-body');
-			await Ploiu.clickAndWait(title)
-			Ploiu.assertNotEquals('open', accordion.className, 'accordion should be closed when clicked while open')
-			Ploiu.assertEquals('0px', body.style.height, 'accordion body should be closed when the accordion is closed') 
-		})
-		
+			await Ploiu.clickAndWait(title);
+			Ploiu.assertNotEquals('open', accordion.className, 'accordion should be closed when clicked while open');
+			Ploiu.assertEquals('0px', body.style.height, 'accordion body should be closed when the accordion is closed');
+		});
+
 		Ploiu.test("should - properly set title and body when created from javascript", () => {
-			const element = document.createElement('accordion-element')
-			element.title = 'test'
+			const element = document.createElement('accordion-element');
+			element.setAttribute('id', 'throughJS')
+			element.title = 'test';
 			// can't add body until after added to dom
-			document.body.appendChild(element)
-			const accordionTitle = element.querySelector('div.ploiu-accordion-title')
-			const accordionBody = element.querySelector('div.ploiu-accordion-body')
-			const body = document.createElement('p')
-			body.innerText = 'why hello there'
-			element.body = body
-			Ploiu.assertEquals('Test', accordionTitle.innerText, 'titles assigned through js should reflect in the dom')
-			Ploiu.assertEquals(body, accordionBody.firstChild, 'assigning a node to the body should reflect in the dom')
-		})
-		
+			document.body.appendChild(element);
+			const accordionTitle = element.querySelector('div.ploiu-accordion-title');
+			const accordionBody = element.querySelector('div.ploiu-accordion-body');
+			const body = document.createElement('p');
+			body.innerText = 'why hello there';
+			element.body = body;
+			Ploiu.assertEquals('Test', accordionTitle.innerText, 'titles assigned through js should reflect in the dom');
+			Ploiu.assertEquals(body, accordionBody.firstChild, 'assigning a node to the body should reflect in the dom');
+		});
+
 		Ploiu.test("should - properly assign nodes to title value in js", () => {
-			const element = document.querySelector('accordion-element#throughHTML')
-			
-		})
+			const element = document.querySelector('accordion-element#throughHTML');
+			const titleElement = element.querySelector('div.ploiu-accordion-title');
+			const newTitleElement = document.createElement('strong');
+			newTitleElement.style.color = 'lightseagreen';
+			newTitleElement.innerText = "wow it's a new title";
+			element.title = newTitleElement;
+			Ploiu.assertEquals(newTitleElement, titleElement.firstChild, 'assigning the title to a node should reflect in the dom');
+		});
+
+		await Ploiu.testAsync("should - opening an accordion should close others of the same group", async () => {
+			const firstElement = document.querySelector('accordion-element#throughHTML')
+			const secondElement = document.querySelector('accordion-element#throughJS')
+			firstElement.expand()
+			secondElement.expand()
+			Ploiu.assertNotEquals('open', firstElement.className, 'first accordion should be closed when the second one is opened')
+		});
 	})();
 </script>
 </body>

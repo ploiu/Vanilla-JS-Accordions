@@ -99,6 +99,51 @@ if (!customElements.get('accordion-element')) {
 		}
 
 		/**
+		 * gets the first parent element whose tag matches 'ACCORDION-ELEMENT' and returns it
+		 * @returns {AccordionElement|null} the first accordion parent element if their is one, else null
+		 * @private
+		 */
+		_getParentAccordion() {
+			let parents = [];
+			let currentNode = this;
+			while (currentNode?.parentNode) {
+				parents.push(currentNode.parentNode);
+				currentNode = currentNode.parentNode;
+			}
+			parents = parents.filter(el => el?.tagName === 'ACCORDION-ELEMENT');
+			return parents.length > 0 ? parents[0] : null;
+		}
+
+		/**
+		 * retrieves the entire chain of parent accordions for this accordion
+		 *
+		 * @return {AccordionElement[]} the list of accordions that are the parents, grandparents, etc. of this accordion
+		 */
+		_getParentAccordionChain() {
+			const parents = []
+			let currentAccordion = this.#parentAccordion
+			while(currentAccordion) {
+				parents.push(currentAccordion)
+				currentAccordion = currentAccordion._getParentAccordion()
+			}
+			return parents
+		}
+
+		/**
+		 * resizes this accordion to fit the content of the child elements
+		 */
+		_resizeParent() {
+			if (this.#parentAccordion?.isOpen) {
+				// add the height of our accordion minus the height of our title element. 
+				this.#parentAccordion.bodyElement.style.height =
+					Number.parseFloat(this.#parentAccordion.bodyElement.style.height.replace(/px/, '')) // we manually set the pixel height of the element, so this is ok to do
+					+ this.bodyElement.scrollHeight + 'px';
+				// now resize all parents, grandparents, etc
+				this.#parentAccordion._resizeParent();
+			}
+		}
+
+		/**
 		 * the internal, read only id of this accordion element
 		 * @returns {number}
 		 */
@@ -209,51 +254,6 @@ if (!customElements.get('accordion-element')) {
 				this.collapse();
 			} else {
 				this.expand();
-			}
-		}
-
-		/**
-		 * gets the first parent element whose tag matches 'ACCORDION-ELEMENT' and returns it
-		 * @returns {AccordionElement|null} the first accordion parent element if their is one, else null
-		 * @private
-		 */
-		_getParentAccordion() {
-			let parents = [];
-			let currentNode = this;
-			while (currentNode?.parentNode) {
-				parents.push(currentNode.parentNode);
-				currentNode = currentNode.parentNode;
-			}
-			parents = parents.filter(el => el?.tagName === 'ACCORDION-ELEMENT');
-			return parents.length > 0 ? parents[0] : null;
-		}
-
-		/**
-		 * retrieves the entire chain of parent accordions for this accordion
-		 * 
-		 * @return {AccordionElement[]} the list of accordions that are the parents, grandparents, etc. of this accordion
-		 */
-		_getParentAccordionChain() {
-			const parents = []
-			let currentAccordion = this.#parentAccordion
-			while(currentAccordion) {
-				parents.push(currentAccordion)
-				currentAccordion = currentAccordion._getParentAccordion()
-			}
-			return parents
-		}
-
-		/**
-		 * resizes this accordion to fit the content of the child elements
-		 */
-		_resizeParent() {
-			if (this.#parentAccordion?.isOpen) {
-				// add the height of our accordion minus the height of our title element. 
-				this.#parentAccordion.bodyElement.style.height =
-					Number.parseFloat(this.#parentAccordion.bodyElement.style.height.replace(/px/, '')) // we manually set the pixel height of the element, so this is ok to do
-					+ this.bodyElement.scrollHeight + 'px';
-				// now resize all parents, grandparents, etc
-				this.#parentAccordion._resizeParent();
 			}
 		}
 
