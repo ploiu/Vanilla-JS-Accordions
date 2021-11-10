@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accordion Element automated testing</title>
+	<link rel="stylesheet" href="../src/accordion.css">
+</head>
+<body>
+<accordion-element data-title="test" id="throughHTML">
+	test body
+</accordion-element>
+
+<script src="./Ploiu.js"></script>
+<script src="../src/AccordionElement.js"></script>
+<script>
+	(async () => {
+		Ploiu.test("should - properly set title and body through html", () => {
+			const accordion = document.querySelector('accordion-element#throughHTML');
+			const title = accordion.querySelector('div.ploiu-accordion-title');
+			const body = accordion.querySelector('div.ploiu-accordion-body');
+			Ploiu.assertEquals('Test', title.innerText, 'data-title should set the title element');
+			Ploiu.assertEquals('test body', body.innerText, 'accordion should wrap body contents in a body element');
+		});
+		
+		await Ploiu.testAsync("should - open the accordion when it is closed and the title is clicked", async () => {
+			const accordion = document.querySelector('accordion-element#throughHTML');
+			const title = accordion.querySelector('div.ploiu-accordion-title');
+			const body = accordion.querySelector('div.ploiu-accordion-body');
+			await Ploiu.clickAndWait(title)
+			Ploiu.assertEquals('open', accordion.className, 'accordion should be open when clicked while closed')
+			Ploiu.assertNotEquals("", body.style.height, 'body height should be changed to accommodate contents')
+		})
+		
+		await Ploiu.testAsync("should - close the accordion when it is open and the title is clicked", async () => {
+			const accordion = document.querySelector('accordion-element#throughHTML');
+			const title = accordion.querySelector('div.ploiu-accordion-title');
+			const body = accordion.querySelector('div.ploiu-accordion-body');
+			await Ploiu.clickAndWait(title)
+			Ploiu.assertNotEquals('open', accordion.className, 'accordion should be closed when clicked while open')
+			Ploiu.assertEquals('0px', body.style.height, 'accordion body should be closed when the accordion is closed') 
+		})
+		
+		Ploiu.test("should - properly set title and body when created from javascript", () => {
+			const element = document.createElement('accordion-element')
+			element.title = 'test'
+			// can't add body until after added to dom
+			document.body.appendChild(element)
+			const accordionTitle = element.querySelector('div.ploiu-accordion-title')
+			const accordionBody = element.querySelector('div.ploiu-accordion-body')
+			const body = document.createElement('p')
+			body.innerText = 'why hello there'
+			element.body = body
+			Ploiu.assertEquals('Test', accordionTitle.innerText, 'titles assigned through js should reflect in the dom')
+			Ploiu.assertEquals(body, accordionBody.firstChild, 'assigning a node to the body should reflect in the dom')
+		})
+		
+		Ploiu.test("should - properly assign nodes to title value in js", () => {
+			const element = document.querySelector('accordion-element#throughHTML')
+			
+		})
+	})();
+</script>
+</body>
+</html>

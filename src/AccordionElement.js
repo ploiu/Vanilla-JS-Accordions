@@ -126,8 +126,13 @@ if (!customElements.get('accordion-element')) {
 		set title(value) {
 			if (typeof value === 'string') {
 				this.#title = value;
-				this.#titleElement.innerText = value;
+				if(this.isConnected) {
+					this.#titleElement.innerText = value;
+				}
 			} else if (value instanceof Node) {
+				if(!this.isConnected) {
+					throw "Can't set an accordion element title to a node when it hasn't been appended to the document!"
+				}
 				this.#title = '';
 				this.#titleElement.innerText = '';
 				// first clear the titleElement's children
@@ -156,6 +161,9 @@ if (!customElements.get('accordion-element')) {
 		 * @param {HTMLElement} value
 		 */
 		set body(value) {
+			if(!this.isConnected) {
+				throw "Can't set an accordion element body when it hasn't been appended to the document!"
+			}
 			// first remove all the contents from our accordion body
 			Array.from(this.#bodyElement.children).forEach(el => el?.remove());
 			// now add the contents of the value to the body element
@@ -171,13 +179,8 @@ if (!customElements.get('accordion-element')) {
 			this.#isOpen = true;
 			// set the height of the body to be the scroll height of the body and all other accordion bodies underneath
 			this.#bodyElement.style.height = `${this.#bodyElement.scrollHeight}px`;
-			// if the parent element is an accordion, increase the height of it to accommodate
-			if (this.#parentAccordion?.isOpen) {
-				// add the height of our accordion minus the height of our title element. 
-				this.#parentAccordion.bodyElement.style.height =
-					Number.parseFloat(this.#parentAccordion.bodyElement.style.height.replace(/px/, '')) // we manually set the pixel height of the element, so this is ok to do
-					+ this.bodyElement.scrollHeight + 'px';
-			}
+			// change the height of all parent accordions to accommodate our body height
+			this._resizeParent();
 			this.classList.add('open');
 		}
 
@@ -223,6 +226,35 @@ if (!customElements.get('accordion-element')) {
 			}
 			parents = parents.filter(el => el?.tagName === 'ACCORDION-ELEMENT');
 			return parents.length > 0 ? parents[0] : null;
+		}
+
+		/**
+		 * retrieves the entire chain of parent accordions for this accordion
+		 * 
+		 * @return {AccordionElement[]} the list of accordions that are the parents, grandparents, etc. of this accordion
+		 */
+		_getParentAccordionChain() {
+			const parents = []
+			let currentAccordion = this.#parentAccordion
+			while(currentAccordion) {
+				parents.push(currentAccordion)
+				currentAccordion = currentAccordion._getParentAccordion()
+			}
+			return parents
+		}
+
+		/**
+		 * resizes this accordion to fit the content of the child elements
+		 */
+		_resizeParent() {
+			if (this.#parentAccordion?.isOpen) {
+				// add the height of our accordion minus the height of our title element. 
+				this.#parentAccordion.bodyElement.style.height =
+					Number.parseFloat(this.#parentAccordion.bodyElement.style.height.replace(/px/, '')) // we manually set the pixel height of the element, so this is ok to do
+					+ this.bodyElement.scrollHeight + 'px';
+				// now resize all parents, grandparents, etc
+				this.#parentAccordion._resizeParent();
+			}
 		}
 
 		/**
