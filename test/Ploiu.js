@@ -38,12 +38,12 @@ const Ploiu = {
 		}
 	},
 	assertNotEquals(notExpected, actual, message = "") {
-		if(notExpected === actual) {
-			if(message && message !== "") {
-				console.error(message)
+		if (notExpected === actual) {
+			if (message && message !== "") {
+				console.error(message);
 			}
-			this.fail(message)
-		}	
+			this.fail(message);
+		}
 	},
 	assertNull(value, message = "") {
 		this.assert(value === null || value === undefined, message);
@@ -149,4 +149,31 @@ const Ploiu = {
 			}, delayTime);
 		});
 	},
+
+	////// misc methods
+	showResults() {
+		const dialog = document.createElement("dialog");
+		document.body.appendChild(dialog);
+		dialog.style.color = "darkgray";
+		if (Ploiu.failedTests.length > 0) {
+			dialog.innerHTML = `
+    <h1 style="color: red">There are test failures:</h1>
+    <ul>
+    ${
+				(() => {
+					let failedTests = Ploiu.failedTests;
+					let listHtml = "";
+					for (const testName of failedTests) {
+						listHtml += "<li>" + testName + "</li>";
+					}
+					return listHtml;
+				})()
+			}
+    </ul>
+  `;
+		} else {
+			dialog.innerHTML = '<h1 style="color: forestgreen">All Tests Passed</h1>';
+		}
+		dialog.showModal();
+	}
 };

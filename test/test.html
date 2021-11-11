@@ -499,22 +499,35 @@
 			Ploiu.assertEquals("open", deepOtherGroup.className, "Deep Other Group should still be open since it's on a different level as deep middle group");
 		});
 
-		Ploiu.test("should - opening a deep accordion should resize parent accordions to match the deep one's size", () => {
-			const top = document.querySelector('accordion-element#heightChangeTop')
-			const middle = document.querySelector('accordion-element#heightChangeMiddle')
-			const bottom = document.querySelector('accordion-element#heightChangeBottom')
-			const initialTopHeight = top.clientHeight
-			top.expand()
-			const topExpandedHeight = top.clientHeight;
+		await Ploiu.testAsync("should - opening a deep accordion should resize parent accordions to match the deep one's size", async () => {
+			const first = document.querySelector('accordion-element#heightChangeTop');
+			const middle = document.querySelector('accordion-element#heightChangeMiddle');
+			const bottom = document.querySelector('accordion-element#heightChangeBottom');
+			const initialTopHeight = first.clientHeight;
+			first.expand();
+			await Ploiu.delay(() => {}, 500);
+			const firstExpandedHeight = first.clientHeight;
 			// because of the css properties we use (max-height), we need to provide an acceptable range for height
-			Ploiu.assert(isInRange(topExpandedHeight - 5, topExpandedHeight + 5, initialTopHeight + middle.bodyElement.scrollHeight), "top client height should accommodate for children");
+			Ploiu.assert(isInRange(firstExpandedHeight - 5, firstExpandedHeight + 5, initialTopHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for children");
 			middle.expand();
-			const middleExpandedHeight = top.clientHeight;
-			Ploiu.assert(isInRange(middleExpandedHeight - 5, middleExpandedHeight + 5, initialTopHeight))
+			await Ploiu.delay(() => {}, 500);
+			const middleExpandedHeight = first.clientHeight;
+			Ploiu.assert(isInRange(first.clientHeight - 5, first.clientHeight + 5, firstExpandedHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for expanded accordion child");
+			bottom.expand();
+			await Ploiu.delay(() => {}, 1_000);
+			Ploiu.assert(isInRange(first.clientHeight - 5, first.clientHeight + 5, middleExpandedHeight + bottom.bodyElement.scrollHeight), "first client height should accommodate for deeply-nested expanded children accordions");
+			// basically the same as before, but in reverse - we collapse the nested accordions and measure the parent height
+			bottom.collapse();
+			await Ploiu.delay(() => {}, 1_000);
+			Ploiu.assert(isInRange(first.clientHeight - 5, first.clientHeight + 5, firstExpandedHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for expanded accordion child after being collapsed");
+			middle.collapse();
+			await Ploiu.delay(() => {}, 500);
+			Ploiu.assert(isInRange(firstExpandedHeight - 5, firstExpandedHeight + 5, initialTopHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for children after being collapsed");
 		});
-		
+		Ploiu.showResults();
+
 		function isInRange(min, max, value) {
-			return value >= min && value <= max
+			return value >= min && value <= max;
 		}
 	})();
 </script>
