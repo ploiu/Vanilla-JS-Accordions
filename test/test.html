@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Accordion Element automated testing</title>
+	<link rel="stylesheet" href="../src/accordion.css">
+	<style>
+		accordion-element {
+			outline: 1px solid;
+		}
+	</style>
+</head>
+<body>
+<accordion-element data-title="test" id="throughHTML">
+	test body
+</accordion-element>
+<accordion-element data-title="different group" data-group="otherGroup" id="otherGroup">this accordion has a different
+	group than the others
+</accordion-element>
+
+<!--deeply-nested accordions-->
+<accordion-element data-title="deep top" id="deepTop">
+	<accordion-element data-title="deep middle" id="deepMiddle">
+		<accordion-element data-title="deep-deep-1" id="deepDeep1">Deep 1</accordion-element>
+		<accordion-element data-title="deep-deep-2" id="deepDeep2">Deep 2</accordion-element>
+		<accordion-element data-title="deep-deep-3" id="deepDeep3">Deep 3</accordion-element>
+		<accordion-element data-title="deep-deep-otherGroup" id="deepDeepOtherGroup" data-group="deepDeepOtherGroup">
+			deep other group
+		</accordion-element>
+		</accordion-eleme nt>
+	</accordion-element>
+	<accordion-element data-title="deep middle other group" data-group="deepDeepOtherGroup"
+					   id="deepMiddleOtherGroup"></accordion-element>
+</accordion-element>
+
+<!--accordions used for measuring height changes-->
+<accordion-element id="heightChangeTop" data-title="height change top">
+	<accordion-element id="heightChangeMiddle" data-title="height change middle">
+		<accordion-element id="heightChangeBottom" data-title="height change bottom">
+			<table>
+				<thead>
+				<tr>
+					<th>1</th>
+					<th>2</th>
+					<th>3</th>
+					<th>4</th>
+					<th>5</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>02</td>
+					<td>03</td>
+					<td>04</td>
+					<td>05</td>
+				</tr>
+				</tbody>
+			</table>
+		</accordion-element>
+	</accordion-element>
+</accordion-element>
+
+<script src="./Ploiu.js"></script>
+<script src="../src/AccordionElement.js"></script>
+<script>
+	(async () => {
+		Ploiu.test("should - properly set title and body through html", () => {
+			const accordion = document.querySelector('accordion-element#throughHTML');
+			const title = accordion.querySelector('div.ploiu-accordion-title');
+			const body = accordion.querySelector('div.ploiu-accordion-body');
+			Ploiu.assertEquals('Test', title.innerText, 'data-title should set the title element');
+			Ploiu.assertEquals('test body', body.innerText, 'accordion should wrap body contents in a body element');
+		});
+
+		await Ploiu.testAsync("should - open the accordion when it is closed and the title is clicked", async () => {
+			const accordion = document.querySelector('accordion-element#throughHTML');
+			const title = accordion.querySelector('div.ploiu-accordion-title');
+			const body = accordion.querySelector('div.ploiu-accordion-body');
+			await Ploiu.clickAndWait(title);
+			Ploiu.assertEquals('open', accordion.className, 'accordion should be open when clicked while closed');
+			Ploiu.assertNotEquals("", body.style.height, 'body height should be changed to accommodate contents');
+		});
+
+		await Ploiu.testAsync("should - close the accordion when it is open and the title is clicked", async () => {
+			const accordion = document.querySelector('accordion-element#throughHTML');
+			const title = accordion.querySelector('div.ploiu-accordion-title');
+			const body = accordion.querySelector('div.ploiu-accordion-body');
+			await Ploiu.clickAndWait(title);
+			Ploiu.assertNotEquals('open', accordion.className, 'accordion should be closed when clicked while open');
+			Ploiu.assertEquals('0px', body.style.height, 'accordion body should be closed when the accordion is closed');
+		});
+
+		Ploiu.test("should - properly set title and body when created from javascript", () => {
+			const element = document.createElement('accordion-element');
+			element.setAttribute('id', 'throughJS');
+			element.title = 'test';
+			// can't add body until after added to dom
+			document.body.appendChild(element);
+			const accordionTitle = element.querySelector('div.ploiu-accordion-title');
+			const accordionBody = element.querySelector('div.ploiu-accordion-body');
+			const body = document.createElement('p');
+			body.innerText = 'why hello there';
+			element.body = body;
+			Ploiu.assertEquals('Test', accordionTitle.innerText, 'titles assigned through js should reflect in the dom');
+			Ploiu.assertEquals(body, accordionBody.firstChild, 'assigning a node to the body should reflect in the dom');
+		});
+
+		Ploiu.test("should - properly assign nodes to title value in js", () => {
+			const element = document.querySelector('accordion-element#throughHTML');
+			const titleElement = element.querySelector('div.ploiu-accordion-title');
+			const newTitleElement = document.createElement('strong');
+			newTitleElement.style.color = 'lightseagreen';
+			newTitleElement.innerText = "wow it's a new title";
+			element.title = newTitleElement;
+			Ploiu.assertEquals(newTitleElement, titleElement.firstChild, 'assigning the title to a node should reflect in the dom');
+		});
+
+		Ploiu.test("should - opening an accordion should close others of the same group", () => {
+			const firstElement = document.querySelector('accordion-element#throughHTML');
+			const secondElement = document.querySelector('accordion-element#throughJS');
+			firstElement.expand();
+			secondElement.expand();
+			Ploiu.assertNotEquals('open', firstElement.className, 'first accordion should be closed when the second one is opened');
+		});
+
+		Ploiu.test("should - opening accordion should not close accordions of different groups", () => {
+			const first = document.querySelector('accordion-element#throughHTML');
+			const second = document.querySelector('accordion-element#otherGroup');
+			first.expand();
+			second.expand();
+			Ploiu.assertEquals('open', first.className, 'first accordion should not have been closed');
+		});
+
+		Ploiu.test("should - opening a deep accordion should only close other accordions of the same group and level", () => {
+			const top = document.querySelector('accordion-element#deepTop');
+			const middle = document.querySelector('accordion-element#deepMiddle');
+			const deepFirst = document.querySelector('accordion-element#deepDeep1');
+			const deepSecond = document.querySelector('accordion-element#deepDeep2');
+			const deepOtherGroup = document.querySelector('accordion-element#deepDeepOtherGroup');
+			const deepMiddleOtherGroup = document.querySelector('accordion-element#deepMiddleOtherGroup');
+			top.expand();
+			middle.expand();
+			deepFirst.expand();
+			Ploiu.assertEquals("open", top.className, "Top accordion should still be open");
+			Ploiu.assertEquals("open", middle.className, "Middle accordion should still be open");
+			deepSecond.expand();
+			Ploiu.assertEquals("open", top.className, "Top accordion should still be open after expanding deep second");
+			Ploiu.assertEquals("open", middle.className, "Middle accordion should still be open after expanding deep second");
+			Ploiu.assertNotEquals("open", deepFirst.className, "Deep First should be closed");
+			deepOtherGroup.expand();
+			Ploiu.assertEquals("open", top.className, "Top accordion should still be open after expanding deep other group");
+			Ploiu.assertEquals("open", middle.className, "Middle accordion should still be open after expanding deep other group");
+			Ploiu.assertEquals("open", deepSecond.className, "Deep Second should be open after opening deep other group");
+			deepMiddleOtherGroup.expand();
+			Ploiu.assertEquals("open", deepOtherGroup.className, "Deep Other Group should still be open since it's on a different level as deep middle group");
+		});
+
+		await Ploiu.testAsync("should - opening a deep accordion should resize parent accordions to match the deep one's size", async () => {
+			const first = document.querySelector('accordion-element#heightChangeTop');
+			const middle = document.querySelector('accordion-element#heightChangeMiddle');
+			const bottom = document.querySelector('accordion-element#heightChangeBottom');
+			const initialTopHeight = first.clientHeight;
+			first.expand();
+			await Ploiu.delay(() => {}, 500);
+			const firstExpandedHeight = first.clientHeight;
+			// because of the css properties we use (max-height), we need to provide an acceptable range for height
+			Ploiu.assert(isInRange(firstExpandedHeight - 5, firstExpandedHeight + 5, initialTopHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for children");
+			middle.expand();
+			await Ploiu.delay(() => {}, 500);
+			const middleExpandedHeight = first.clientHeight;
+			Ploiu.assert(isInRange(first.clientHeight - 5, first.clientHeight + 5, firstExpandedHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for expanded accordion child");
+			bottom.expand();
+			await Ploiu.delay(() => {}, 1_000);
+			Ploiu.assert(isInRange(first.clientHeight - 5, first.clientHeight + 5, middleExpandedHeight + bottom.bodyElement.scrollHeight), "first client height should accommodate for deeply-nested expanded children accordions");
+			// basically the same as before, but in reverse - we collapse the nested accordions and measure the parent height
+			bottom.collapse();
+			await Ploiu.delay(() => {}, 1_000);
+			Ploiu.assert(isInRange(first.clientHeight - 5, first.clientHeight + 5, firstExpandedHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for expanded accordion child after being collapsed");
+			middle.collapse();
+			await Ploiu.delay(() => {}, 500);
+			Ploiu.assert(isInRange(firstExpandedHeight - 5, firstExpandedHeight + 5, initialTopHeight + middle.bodyElement.scrollHeight), "first client height should accommodate for children after being collapsed");
+		});
+		Ploiu.showResults();
+
+		function isInRange(min, max, value) {
+			return value >= min && value <= max;
+		}
+	})();
+</script>
+</body>
+</html>
