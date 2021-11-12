@@ -38,7 +38,7 @@ if (!customElements.get('accordion-element')) {
 	 */
 	class AccordionElement extends HTMLElement {
 		#title;
-		#id;
+		#accordionId;
 		#isOpen;
 		#group;
 		#titleElement;
@@ -50,7 +50,7 @@ if (!customElements.get('accordion-element')) {
 			super();
 			// TODO make these variables private once all major browsers support private variables
 			this.#title = title ?? this.dataset.title ?? '';
-			this.#id = id ?? this.dataset.id ?? idCounter++;
+			this.#accordionId = id ?? this.dataset.id ?? idCounter++;
 			this.#isOpen = isOpen ?? this.dataset.isOpen ?? false;
 			this.#group = group ?? this.dataset.group ?? '';
 
@@ -155,8 +155,8 @@ if (!customElements.get('accordion-element')) {
 		 * the internal, read only id of this accordion element
 		 * @returns {number}
 		 */
-		get id() {
-			return this.#id;
+		get accordionId() {
+			return this.#accordionId;
 		}
 
 		get group() {

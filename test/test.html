@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Accordion Element automated testing</title>
-	<link rel="stylesheet" href="../src/accordion.css">
+	<link rel="stylesheet" href="../build/accordion.min.css">
 	<style>
 		accordion-element {
 			outline: 1px solid;
@@ -405,7 +405,7 @@
 </accordion-element>
 
 <script src="./Ploiu.js"></script>
-<script src="../src/AccordionElement.js"></script>
+<script src="../build/AccordionElement.min.js"></script>
 <script>
 	(async () => {
 		Ploiu.test("should - properly set title and body through html", () => {
@@ -421,7 +421,7 @@
 			const title = accordion.querySelector('div.ploiu-accordion-title');
 			const body = accordion.querySelector('div.ploiu-accordion-body');
 			await Ploiu.clickAndWait(title);
-			Ploiu.assertEquals('open', accordion.className, 'accordion should be open when clicked while closed');
+			Ploiu.assert(accordion.isOpen, 'accordion should be open when clicked while closed');
 			Ploiu.assertNotEquals("", body.style.height, 'body height should be changed to accommodate contents');
 		});
 
@@ -430,7 +430,7 @@
 			const title = accordion.querySelector('div.ploiu-accordion-title');
 			const body = accordion.querySelector('div.ploiu-accordion-body');
 			await Ploiu.clickAndWait(title);
-			Ploiu.assertNotEquals('open', accordion.className, 'accordion should be closed when clicked while open');
+			Ploiu.assertFalse(accordion.isOpen, 'accordion should be closed when clicked while open');
 			Ploiu.assertEquals('0px', body.style.height, 'accordion body should be closed when the accordion is closed');
 		});
 
@@ -464,7 +464,7 @@
 			const secondElement = document.querySelector('accordion-element#throughJS');
 			firstElement.expand();
 			secondElement.expand();
-			Ploiu.assertNotEquals('open', firstElement.className, 'first accordion should be closed when the second one is opened');
+			Ploiu.assertFalse(firstElement.isOpen, 'first accordion should be closed when the second one is opened');
 		});
 
 		Ploiu.test("should - opening accordion should not close accordions of different groups", () => {
@@ -472,7 +472,7 @@
 			const second = document.querySelector('accordion-element#otherGroup');
 			first.expand();
 			second.expand();
-			Ploiu.assertEquals('open', first.className, 'first accordion should not have been closed');
+			Ploiu.assert(first.isOpen, 'first accordion should not have been closed');
 		});
 
 		Ploiu.test("should - opening a deep accordion should only close other accordions of the same group and level", () => {
@@ -485,18 +485,18 @@
 			top.expand();
 			middle.expand();
 			deepFirst.expand();
-			Ploiu.assertEquals("open", top.className, "Top accordion should still be open");
-			Ploiu.assertEquals("open", middle.className, "Middle accordion should still be open");
+			Ploiu.assert(top.isOpen, "Top accordion should still be open");
+			Ploiu.assert(middle.isOpen, "Middle accordion should still be open");
 			deepSecond.expand();
-			Ploiu.assertEquals("open", top.className, "Top accordion should still be open after expanding deep second");
-			Ploiu.assertEquals("open", middle.className, "Middle accordion should still be open after expanding deep second");
-			Ploiu.assertNotEquals("open", deepFirst.className, "Deep First should be closed");
+			Ploiu.assert(top.isOpen, "Top accordion should still be open after expanding deep second");
+			Ploiu.assert(middle.isOpen, "Middle accordion should still be open after expanding deep second");
+			Ploiu.assertFalse(deepFirst.isOpen, "Deep First should be closed");
 			deepOtherGroup.expand();
-			Ploiu.assertEquals("open", top.className, "Top accordion should still be open after expanding deep other group");
-			Ploiu.assertEquals("open", middle.className, "Middle accordion should still be open after expanding deep other group");
-			Ploiu.assertEquals("open", deepSecond.className, "Deep Second should be open after opening deep other group");
+			Ploiu.assert(top.isOpen, "Top accordion should still be open after expanding deep other group");
+			Ploiu.assert(middle.isOpen, "Middle accordion should still be open after expanding deep other group");
+			Ploiu.assert(deepSecond.isOpen, "Deep Second should be open after opening deep other group");
 			deepMiddleOtherGroup.expand();
-			Ploiu.assertEquals("open", deepOtherGroup.className, "Deep Other Group should still be open since it's on a different level as deep middle group");
+			Ploiu.assert(deepOtherGroup.isOpen, "Deep Other Group should still be open since it's on a different level as deep middle group");
 		});
 
 		await Ploiu.testAsync("should - opening a deep accordion should resize parent accordions to match the deep one's size", async () => {
