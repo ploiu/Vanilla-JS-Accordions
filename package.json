@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "npm run build-js && npm run build-less",
-		"build-js": "mkdir build && minify src/AccordionElement.js -o build/AccordionElement.min.js",
+		"build-js": "rm -rf build && mkdir build && minify src/AccordionElement.js -o build/AccordionElement.min.js",
 		"build-less": "lessc src/accordion.less src/accordion.css && lessc src/accordion.less build/accordion.min.css --clean-css",
 		"build-source-maps": "babel src --out-dir build --source-maps"
 	},
