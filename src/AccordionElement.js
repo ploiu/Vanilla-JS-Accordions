@@ -44,6 +44,8 @@ if (!customElements.get('accordion-element')) {
 		#titleElement;
 		#bodyElement;
 		#parentAccordion;
+		/** need this because some frameworks cause connectedCallback to be called multiple times */
+		#finishedConnecting;
 		#initialParentAccordionHeight;
 
 		constructor({title, id, isOpen, group} = {}) {
@@ -275,7 +277,7 @@ if (!customElements.get('accordion-element')) {
 		 */
 		connectedCallback() {
 			// make sure we're actually connected before we do anything
-			if (this.isConnected) {
+			if (!this.#finishedConnecting && this.isConnected) {
 				this.#titleElement = this._createTitleElement();
 				this.#bodyElement = this._createBodyElement();
 				// append children here and set up other dom-based attributes
@@ -291,6 +293,7 @@ if (!customElements.get('accordion-element')) {
 				} else {
 					this.#initialParentAccordionHeight = 0; // reset this
 				}
+				this.#finishedConnecting = true;
 			}
 		}
 
