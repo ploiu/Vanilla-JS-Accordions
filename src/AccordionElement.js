@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-if (!customElements.get("accordion-element")) {
+if (!customElements.get('accordion-element')) {
 	// used to keep track of default IDs
 	let idCounter = 0;
 	/**
@@ -50,10 +50,10 @@ if (!customElements.get("accordion-element")) {
 
 		constructor({ title, id, isOpen, group } = {}) {
 			super();
-			this.#title = title ?? this.dataset.title ?? "";
+			this.#title = title ?? this.dataset.title ?? '';
 			this.#accordionId = id ?? this.dataset.id ?? idCounter++;
 			this.#isOpen = isOpen ?? this.dataset.isOpen ?? false;
-			this.#group = group ?? this.dataset.group ?? "";
+			this.#group = group ?? this.dataset.group ?? '';
 
 			// add the accordion to the list
 			globalThis.accordions.push(this);
@@ -63,30 +63,30 @@ if (!customElements.get("accordion-element")) {
 
 		#createTitleElement() {
 			// if we already have a div with the class ploiu-accordion-title, skip all this and just return the element. This allows the developer to set their own custom html titles
-			const existingTitle = this.querySelector("div.ploiu-accordion-title");
+			const existingTitle = this.querySelector('div.ploiu-accordion-title');
 			if (existingTitle) {
-				existingTitle.addEventListener("click", () => this.toggle());
+				existingTitle.addEventListener('click', () => this.toggle());
 				return existingTitle;
 			} else {
-				const element = document.createElement("div");
-				element.classList.add("ploiu-accordion-title");
+				const element = document.createElement('div');
+				element.classList.add('ploiu-accordion-title');
 				element.innerText = this.#title;
-				element.addEventListener("click", () => this.toggle());
+				element.addEventListener('click', () => this.toggle());
 				return element;
 			}
 		}
 
 		#createBodyElement() {
 			// if the developer already specified an accordion body, just return that instead of creating it all ourselves
-			const existingBody = this.querySelector("div.ploiu-accordion-body");
+			const existingBody = this.querySelector('div.ploiu-accordion-body');
 			if (existingBody) {
 				return existingBody;
 			} else {
-				const element = document.createElement("div");
-				element.classList.add("ploiu-accordion-body");
+				const element = document.createElement('div');
+				element.classList.add('ploiu-accordion-body');
 				// add all the child nodes from this element to the body element
 				const trueChildren = [...this.childNodes].filter((it) =>
-					!it.classList?.contains("ploiu-accordion-title")
+					!it.classList?.contains('ploiu-accordion-title')
 				);
 				for (const child of trueChildren) {
 					// always get the 0th index since we'll be removing the node later
@@ -110,7 +110,7 @@ if (!customElements.get("accordion-element")) {
 				parents.push(currentNode.parentNode);
 				currentNode = currentNode.parentNode;
 			}
-			parents = parents.filter((el) => el?.tagName === "ACCORDION-ELEMENT");
+			parents = parents.filter((el) => el?.tagName === 'ACCORDION-ELEMENT');
 			return parents.length > 0 ? parents[0] : null;
 		}
 
@@ -136,8 +136,8 @@ if (!customElements.get("accordion-element")) {
 			if (this.#parentAccordion?.isOpen) {
 				// add the height of our accordion minus the height of our title element.
 				this.#parentAccordion.bodyElement.style.height =
-					Number.parseFloat(this.#parentAccordion.bodyElement.style.height.replace(/px/, "")) + // we manually set the pixel height of the element, so this is ok to do
-					amount + "px";
+					Number.parseFloat(this.#parentAccordion.bodyElement.style.height.replace(/px/, '')) + // we manually set the pixel height of the element, so this is ok to do
+					amount + 'px';
 				// now resize all parents, grandparents, etc
 				this.#parentAccordion.#expandParent(amount);
 			}
@@ -146,7 +146,7 @@ if (!customElements.get("accordion-element")) {
 		#collapseParent(amount) {
 			if (this.#parentAccordion?.isOpen) {
 				this.#parentAccordion.bodyElement.style.height = this.#parentAccordion.bodyElement.clientHeight -
-					amount + "px";
+					amount + 'px';
 				// propagate the shrinkage across all parents
 				this.#parentAccordion.#collapseParent(amount);
 			}
@@ -178,7 +178,7 @@ if (!customElements.get("accordion-element")) {
 		 * @param {string|Node} value
 		 */
 		set title(value) {
-			if (typeof value === "string") {
+			if (typeof value === 'string') {
 				this.#title = value;
 				if (this.isConnected) {
 					this.#titleElement.innerText = value;
@@ -187,8 +187,8 @@ if (!customElements.get("accordion-element")) {
 				if (!this.isConnected) {
 					throw "Can't set an accordion element title to a node when it hasn't been appended to the document!";
 				}
-				this.#title = "";
-				this.#titleElement.innerText = "";
+				this.#title = '';
+				this.#titleElement.innerText = '';
 				// first clear the titleElement's children
 				[...this.#titleElement.children].forEach((it) => it.remove());
 				// now append our value to the title element
@@ -239,7 +239,7 @@ if (!customElements.get("accordion-element")) {
 			this.#bodyElement.style.height = `${this.#bodyElement.scrollHeight}px`;
 			// change the height of all parent accordions to accommodate our added body height
 			this.#expandParent(this.#bodyElement.scrollHeight);
-			this.classList.add("open");
+			this.classList.add('open');
 		}
 
 		/**
@@ -252,10 +252,10 @@ if (!customElements.get("accordion-element")) {
 				if (this.#parentAccordion) {
 					this.#collapseParent(this.bodyElement.scrollHeight);
 				}
-				this.#bodyElement.style.height = "0";
-				this.classList.remove("open");
+				this.#bodyElement.style.height = '0';
+				this.classList.remove('open');
 				// close all child accordions
-				Array.from(this.querySelectorAll("accordion-element")).forEach((accordion) => accordion.collapse());
+				Array.from(this.querySelectorAll('accordion-element')).forEach((accordion) => accordion.collapse());
 			}
 		}
 
@@ -319,9 +319,9 @@ if (!customElements.get("accordion-element")) {
 		 * @returns {AccordionElement[]}
 		 */
 		static findAccordionsByGroup(group) {
-			return [...document.querySelectorAll("accordion-element")].filter((accordion) =>{
-				console.debug(accordion, accordion.group)
-				accordion.group.toLowerCase() === group.toLowerCase()
+			return [...document.querySelectorAll('accordion-element')].filter((accordion) => {
+				console.debug(accordion, accordion.group);
+				accordion.group.toLowerCase() === group.toLowerCase();
 			});
 		}
 	}
@@ -335,14 +335,14 @@ if (!customElements.get("accordion-element")) {
 		connectedCallback() {
 			if (this.isConnected) {
 				// for each of our child accordion elements, set its group to be this object
-				Array.from(this.querySelectorAll("accordion-element")).forEach((el) => el.group = `fan-${idCounter}`);
+				Array.from(this.querySelectorAll('accordion-element')).forEach((el) => el.group = `fan-${idCounter}`);
 				idCounter++;
 			}
 		}
 	}
 
-	customElements.define("accordion-element", AccordionElement);
-	customElements.define("accordion-fan", AccordionFan);
+	customElements.define('accordion-element', AccordionElement);
+	customElements.define('accordion-fan', AccordionFan);
 	// make this class accessible to external scripts
 	globalThis.AccordionElement = AccordionElement;
 }

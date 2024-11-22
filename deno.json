@@ -4,6 +4,7 @@
 		"useTabs": true,
 		"lineWidth": 120,
 		"proseWrap": "preserve",
+		"singleQuote": true,
 		"exclude": [
 			"build/**",
 			"test/Ploiu.js",
