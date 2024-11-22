@@ -104,14 +104,13 @@ if (!customElements.get('accordion-element')) {
 		 * @private
 		 */
 		#getParentAccordion() {
-			let parents = [];
-			let currentNode = this;
+			const parents = [];
+			let currentNode = this.parentNode;
 			while (currentNode?.parentNode) {
 				parents.push(currentNode.parentNode);
 				currentNode = currentNode.parentNode;
 			}
-			parents = parents.filter((el) => el?.tagName === 'ACCORDION-ELEMENT');
-			return parents.length > 0 ? parents[0] : null;
+			return parents.find((el) => el?.tagName === 'ACCORDION-ELEMENT') || null;
 		}
 
 		/**
@@ -307,8 +306,8 @@ if (!customElements.get('accordion-element')) {
 		 */
 		static findAccordionById(id) {
 			try {
-				return window.accordions.filter((accordion) => accordion.id === id)[0];
-			} catch (exception) {
+				return globalThis.accordions.filter((accordion) => accordion.id === id)[0];
+			} catch {
 				return null;
 			}
 		}
@@ -320,7 +319,7 @@ if (!customElements.get('accordion-element')) {
 		 */
 		static findAccordionsByGroup(group) {
 			return [...document.querySelectorAll('accordion-element')].filter((accordion) => {
-				// for some reason, class getters are not called for custom elements that aren't fully constructed yet. Not sure why, but 
+				// for some reason, class getters are not called for custom elements that aren't fully constructed yet. Not sure why, but
 				// when that happens, `accordion.group` will be undefined even if the private properties have values. Once again, the getter never gets called
 				// happens in chromium and non chromium browsers
 				return accordion.group?.toLowerCase() === group.toLowerCase();

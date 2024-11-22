@@ -12,8 +12,14 @@
 			"**/*.html"
 		]
 	},
+	"lint": {
+		"exclude": [
+			"./build/**",
+			"./test/Ploiu.js"
+		]
+	},
 	"tasks": {
-		"build": "deno run -A ./build.js"
+		"build": "deno lint; deno fmt; deno run --allow-read --allow-write --allow-env --allow-run ./build.js"
 	},
 	"imports": {
 		"@libs/bundle": "jsr:@libs/bundle@^12.4.1",
