@@ -320,8 +320,10 @@ if (!customElements.get('accordion-element')) {
 		 */
 		static findAccordionsByGroup(group) {
 			return [...document.querySelectorAll('accordion-element')].filter((accordion) => {
-				console.debug(accordion, accordion.group);
-				accordion.group.toLowerCase() === group.toLowerCase();
+				// for some reason, class getters are not called for custom elements that aren't fully constructed yet. Not sure why, but 
+				// when that happens, `accordion.group` will be undefined even if the private properties have values. Once again, the getter never gets called
+				// happens in chromium and non chromium browsers
+				accordion.isConnected && accordion.group?.toLowerCase() === group.toLowerCase();
 			});
 		}
 	}
