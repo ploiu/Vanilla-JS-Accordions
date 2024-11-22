@@ -1,0 +1,22 @@
+{
+	"fmt": {
+		"indentWidth": 4,
+		"useTabs": true,
+		"lineWidth": 120,
+		"proseWrap": "preserve",
+		"exclude": [
+			"build/**",
+			"test/Ploiu.js",
+			"README.md",
+			"**/*.html"
+		]
+	},
+	"tasks": {
+		"build": "deno run -A ./build.js"
+	},
+	"imports": {
+		"@libs/bundle": "jsr:@libs/bundle@^12.4.1",
+		"@std/fmt": "jsr:@std/fmt@^1.0.3",
+		"lightningcss-wasm": "npm:lightningcss-wasm@^1.28.1"
+	}
+}
