@@ -47,6 +47,8 @@ if (!customElements.get('accordion-element')) {
 		/** need this because some frameworks cause connectedCallback to be called multiple times */
 		#finishedConnecting;
 		#initialParentAccordionHeight;
+		/** @type {MutationObserver} mutation observer used to detect when children are added, so this can resize itself as needed */
+		#observer;
 
 		constructor({ title, id, isOpen, group } = {}) {
 			super();
@@ -134,9 +136,11 @@ if (!customElements.get('accordion-element')) {
 		#expandParent(amount) {
 			if (this.#parentAccordion?.isOpen) {
 				// add the height of our accordion minus the height of our title element.
-				this.#parentAccordion.bodyElement.style.height =
-					Number.parseFloat(this.#parentAccordion.bodyElement.style.height.replace(/px/, '')) + // we manually set the pixel height of the element, so this is ok to do
-					amount + 'px';
+				const currentParentHeight = Number.parseFloat(
+					this.#parentAccordion.bodyElement.style.height.replace('px', ''),
+				);
+				const newParentHeight = currentParentHeight + amount;
+				this.#parentAccordion.bodyElement.style.height = newParentHeight + 'px';
 				// now resize all parents, grandparents, etc
 				this.#parentAccordion.#expandParent(amount);
 			}
@@ -144,8 +148,11 @@ if (!customElements.get('accordion-element')) {
 
 		#collapseParent(amount) {
 			if (this.#parentAccordion?.isOpen) {
-				this.#parentAccordion.bodyElement.style.height = this.#parentAccordion.bodyElement.clientHeight -
-					amount + 'px';
+				const currentParentHeight = Number.parseFloat(
+					this.#parentAccordion.bodyElement.style.height.replace('px', ''),
+				);
+				const newParentHeight = currentParentHeight - amount;
+				this.#parentAccordion.bodyElement.style.height = newParentHeight + 'px';
 				// propagate the shrinkage across all parents
 				this.#parentAccordion.#collapseParent(amount);
 			}
@@ -187,8 +194,7 @@ if (!customElements.get('accordion-element')) {
 					throw "Can't set an accordion element title to a node when it hasn't been appended to the document!";
 				}
 				this.#title = '';
-				this.#titleElement.innerText = '';
-				// first clear the titleElement's children
+				this.#titleElement.innerText = ''; // first clear the titleElement's children
 				[...this.#titleElement.children].forEach((it) => it.remove());
 				// now append our value to the title element
 				this.#titleElement.appendChild(value);
@@ -294,8 +300,47 @@ if (!customElements.get('accordion-element')) {
 				} else {
 					this.#initialParentAccordionHeight = 0; // reset this
 				}
+				this.#setupObserver();
 				this.#finishedConnecting = true;
 			}
+		}
+
+		/**
+		 * called when this node is removed from the DOM.
+		 *
+		 * An editor may say it's unused, but it's called by the browser and should not be removed
+		 *
+		 * @override
+		 */
+		disconnectedCallback() {
+			if (this.#observer) {
+				this.#observer.disconnect();
+			}
+		}
+
+		#setupObserver() {
+			this.#observer = new MutationObserver((mutations) => {
+				for (const mutation of mutations) {
+					if (mutation.type === 'childList' && this.#isOpen) {
+						this.#onChildrenChanged();
+					}
+				}
+			});
+			this.#observer.observe(this, { childList: true, subtree: true });
+		}
+
+		#onChildrenChanged() {
+			// scrollHeight is messed up by css transitions, so we need to disable that if we have a parent accordion
+			if (this.#parentAccordion) {
+				this.#bodyElement.style.transition = 'none';
+			}
+			// set to auto here because we manually set style height, which impacts scroll height. Without this, removing elements will not resize
+			this.#bodyElement.style.height = 'auto';
+			const newHeight = this.#bodyElement.scrollHeight + 'px';
+			this.#bodyElement.style.transition = 'var(--accordion-expand-rate)';
+			requestAnimationFrame(() => {
+				this.#bodyElement.style.height = newHeight;
+			});
 		}
 
 		/**
