@@ -3,6 +3,8 @@ import { transform as lightningCss } from 'lightningcss-wasm'
 import { gray, green } from '@std/fmt/colors'
 
 const banner = Deno.readTextFileSync('./LICENSE')
+Deno.removeSync('./build', { recursive: true })
+Deno.mkdirSync('./build')
 
 await Promise.all([buildJs(), buildCss()])
 console.info(green('Successfully minified js and css!'))
