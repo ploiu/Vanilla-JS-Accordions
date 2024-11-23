@@ -22,88 +22,88 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 :root {
-	--accordion-title-background: lightgray;
-	--accordion-body-border-color: transparent;
-	--accordion-expand-rate: 0.25s;
-	--accordion-open-title-background: gray;
-	--accordion-border-radius: 4px;
-	--accordion-fan-accordion-border-style: 1px solid #ddd;
-	--accordion-title-text-transform: capitalize;
+  --accordion-title-background: lightgray;
+  --accordion-body-border-color: transparent;
+  --accordion-expand-rate: 0.25s;
+  --accordion-open-title-background: gray;
+  --accordion-border-radius: 4px;
+  --accordion-fan-accordion-border-style: 1px solid #ddd;
+  --accordion-title-text-transform: capitalize;
 }
 
 accordion-element {
-	width: 95%;
-	margin-top: 0.1em;
-	display: inline-block;
-	height: unset;
-	border-radius: var(--accordion-border-radius);
+  width: 95%;
+  margin-top: 0.1em;
+  display: inline-block;
+  height: unset;
+  border-radius: var(--accordion-border-radius);
 
-	> .ploiu-accordion-title {
-		padding: 1rem;
-		background-color: var(--accordion-title-background);
-		text-transform: var(--accordion-title-text-transform);
-		border-radius: inherit;
+  > .ploiu-accordion-title {
+    padding: 1rem;
+    background-color: var(--accordion-title-background);
+    text-transform: var(--accordion-title-text-transform);
+    border-radius: inherit;
 
-		&:hover {
-			cursor: pointer;
-		}
-	}
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
-	> .ploiu-accordion-body {
-		border: 1px solid var(--accordion-body-border-color);
-		width: 95%;
-		transition: height var(--accordion-expand-rate);
-		word-wrap: anywhere;
-		overflow: hidden;
+  > .ploiu-accordion-body {
+    border: 1px solid var(--accordion-body-border-color);
+    width: 95%;
+    transition: height var(--accordion-expand-rate);
+    word-wrap: anywhere;
+    overflow: hidden;
 
-		> accordion-element {
-			margin-left: 1em;
-		}
-	}
+    > accordion-element {
+      margin-left: 1em;
+    }
+  }
 
-	/* closed accordion state */
-	&:not(.open) {
-		> .ploiu-accordion-body {
-			height: 0 !important;
-			border: 0;
-		}
-	}
+  /* closed accordion state */
+  &:not(.open) {
+    > .ploiu-accordion-body {
+      height: 0 !important;
+      border: 0;
+    }
+  }
 
-	/* open accordion state */
-	&.open {
-		height: max-content;
+  /* open accordion state */
+  &.open {
+    height: max-content;
 
-		> .ploiu-accordion-title {
-			background-color: var(--accordion-open-title-background);
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
-		}
-	}
+    > .ploiu-accordion-title {
+      background-color: var(--accordion-open-title-background);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 }
 
 accordion-fan {
-	display: block;
-	width: 95%;
-	padding-top: 1vh;
+  display: block;
+  width: 95%;
+  padding-top: 1vh;
 
-	> accordion-element {
-		margin-top: -1vh;
-		border: var(--accordion-fan-accordion-border-style);
-		border-radius: 0;
-		width: 100%;
+  > accordion-element {
+    margin-top: -1vh;
+    border: var(--accordion-fan-accordion-border-style);
+    border-radius: 0;
+    width: 100%;
 
-		> .ploiu-accordion-title {
-			width: auto;
-		}
+    > .ploiu-accordion-title {
+      width: auto;
+    }
 
-		&:first-child {
-			border-top-left-radius: var(--accordion-border-radius);
-			border-top-right-radius: var(--accordion-border-radius);
-		}
+    &:first-child {
+      border-top-left-radius: var(--accordion-border-radius);
+      border-top-right-radius: var(--accordion-border-radius);
+    }
 
-		&:last-child {
-			border-bottom-left-radius: var(--accordion-border-radius);
-			border-bottom-right-radius: var(--accordion-border-radius);
-		}
-	}
+    &:last-child {
+      border-bottom-left-radius: var(--accordion-border-radius);
+      border-bottom-right-radius: var(--accordion-border-radius);
+    }
+  }
 }
