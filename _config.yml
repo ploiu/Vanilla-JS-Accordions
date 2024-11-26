@@ -1,0 +1,14 @@
+theme: jekyll-theme-slate
+exclude:
+  - .vscode
+  - src
+  - test
+  - .gitignore
+  - build.js
+  - deno*
+  - LICENSE
+  - README.md
+  - test.html
+include:
+  - index.html
+  - build
