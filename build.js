@@ -2,7 +2,7 @@ import { bundle as bundleJs } from '@libs/bundle/ts'
 import { transform as lightningCss } from 'lightningcss-wasm'
 import { gray, green } from '@std/fmt/colors'
 
-const banner = Deno.readTextFileSync('./LICENSE')
+const banner = 'copyright 2024 ploiu MIT License https://github.com/ploiu/Vanilla-JS-Accordions'
 Deno.removeSync('./build', { recursive: true })
 Deno.mkdirSync('./build')
 
