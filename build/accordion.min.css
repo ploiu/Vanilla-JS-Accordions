@@ -1,23 +1,2 @@
-/*MIT License
-
-Copyright (c) 2024 ploiu
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+/*copyright 2024 ploiu MIT License https://github.com/ploiu/Vanilla-JS-Accordions*/
 :root{--accordion-title-background:lightgray;--accordion-body-border-color:transparent;--accordion-expand-rate:.25s;--accordion-open-title-background:gray;--accordion-border-radius:4px;--accordion-fan-accordion-border-style:1px solid #ddd;--accordion-title-text-transform:capitalize}accordion-element{width:95%;height:unset;border-radius:var(--accordion-border-radius);margin-top:.1em;display:inline-block;&>.ploiu-accordion-title{background-color:var(--accordion-title-background);text-transform:var(--accordion-title-text-transform);border-radius:inherit;padding:1rem;&:hover{cursor:pointer}}&>.ploiu-accordion-body{border:1px solid var(--accordion-body-border-color);width:95%;transition:height var(--accordion-expand-rate);word-wrap:anywhere;overflow:hidden;&>accordion-element{margin-left:1em}}&:not(.open){&>.ploiu-accordion-body{border:0;height:0!important}}&.open{height:max-content;&>.ploiu-accordion-title{background-color:var(--accordion-open-title-background);border-bottom-right-radius:0;border-bottom-left-radius:0}}}accordion-fan{width:95%;padding-top:1vh;display:block;&>accordion-element{border:var(--accordion-fan-accordion-border-style);border-radius:0;width:100%;margin-top:-1vh;&>.ploiu-accordion-title{width:auto}&:first-child{border-top-left-radius:var(--accordion-border-radius);border-top-right-radius:var(--accordion-border-radius)}&:last-child{border-bottom-left-radius:var(--accordion-border-radius);border-bottom-right-radius:var(--accordion-border-radius)}}}
