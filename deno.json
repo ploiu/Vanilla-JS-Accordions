@@ -23,8 +23,8 @@
     "build": "deno lint; deno fmt; deno run --allow-read --allow-write='./build' --allow-env --allow-run ./build.js"
   },
   "imports": {
-    "@libs/bundle": "jsr:@libs/bundle@^12.4.1",
-    "@std/fmt": "jsr:@std/fmt@^1.0.3",
-    "lightningcss-wasm": "npm:lightningcss-wasm@^1.28.1"
+    "@libs/bundle": "jsr:@libs/bundle@^12.6.5",
+    "@std/fmt": "jsr:@std/fmt@^1.0.8",
+    "lightningcss-wasm": "npm:lightningcss-wasm@^1.30.1"
   }
 }

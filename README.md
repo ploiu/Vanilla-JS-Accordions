@@ -23,3 +23,10 @@ To be completely honest, I was bored and wanted to start a side project. I saw t
 - auto-update accordion title and body - using class setters, an accordion's title and contents can be updated without you having to touch the dom, making changes to the accordion as simple as a single line of code
 
 Want to check it out? click [this link](https://ploiu.github.io/Vanilla-JS-Accordions/) and try out the demo page. 
+
+# Building
+`deno task build`
+
+# Testing
+`deno task build`
+`open ./test/test.html`
